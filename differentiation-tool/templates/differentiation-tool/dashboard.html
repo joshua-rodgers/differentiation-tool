@@ -1,0 +1,91 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}Dashboard - DiffF{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <h1 class="card-title">Welcome, {{ session.user_name }}!</h1>
+        <p class="card-subtitle">Here's an overview of your differentiation tools.</p>
+
+        <div class="dashboard-grid">
+            <div class="stat-card">
+                <div class="stat-number">{{ student_count }}</div>
+                <div class="stat-label">Students</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ group_count }}</div>
+                <div class="stat-label">Groups</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">{{ lesson_count }}</div>
+                <div class="stat-label">Saved Lessons</div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{{ url_for('differentiation.new_differentiation') }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 1rem 2rem;">
+                Differentiate a New Lesson
+            </a>
+        </div>
+    </div>
+
+    {% if active_sessions %}
+    <div class="card card-accent">
+        <h2 class="card-title">Active Sessions</h2>
+        <p class="text-muted">Continue working on these in-progress differentiation sessions.</p>
+        <div class="list-group">
+            {% for sess in active_sessions %}
+            <div class="list-group-item">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <strong>{{ sess['title'] or 'Untitled Session' }}</strong>
+                        <div class="text-muted" style="font-size: 0.9rem;">Phase: {{ sess['phase'] }} • Started: {{ sess['created_at'][:10] }}</div>
+                    </div>
+                    <div>
+                        {% if sess['phase'] == 'select_students' or sess['phase'] == 'analyze' %}
+                            <a href="{{ url_for('differentiation.generate_suggestions', session_id=sess['id']) }}" class="btn btn-primary">Continue</a>
+                        {% elif sess['phase'] == 'review_suggestions' %}
+                            <a href="{{ url_for('differentiation.generate_suggestions', session_id=sess['id']) }}" class="btn btn-primary">Review Suggestions</a>
+                        {% elif sess['phase'] == 'ready_to_generate' %}
+                            <a href="{{ url_for('differentiation.generate_final', session_id=sess['id']) }}" class="btn btn-primary">Generate Content</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if recent_lessons %}
+    <div class="card">
+        <h2 class="card-title">Recent Lessons</h2>
+        <div class="list-group">
+            {% for lesson in recent_lessons %}
+            <div class="list-group-item">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                    <div>
+                        <strong>{{ lesson['title'] }}</strong>
+                        <div class="text-muted" style="font-size: 0.9rem;">Created: {{ lesson['created_at'][:10] }}</div>
+                    </div>
+                    <a href="{{ url_for('differentiation.view_lesson', lesson_id=lesson['id']) }}" class="btn btn-secondary">View</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-3">
+            <a href="{{ url_for('differentiation.lesson_library') }}">View All Lessons →</a>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if not student_count %}
+    <div class="card card-accent">
+        <h2 class="card-title">Get Started</h2>
+        <p>To begin differentiating lessons, you'll need to add your students first.</p>
+        <a href="{{ url_for('differentiation.add_student') }}" class="btn btn-primary">Add Your First Student</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

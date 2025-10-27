@@ -1,0 +1,77 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}Review Suggestions - DiffF{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card card-accent">
+        <h1 class="card-title">AI-Generated Differentiation Suggestions</h1>
+        <p class="card-subtitle">Phase 2: Review and select the suggestions you want to apply</p>
+
+        <div class="phase-indicator">
+            <div class="phase-step completed">
+                <div class="phase-circle">✓</div>
+                <div class="phase-label">Input</div>
+            </div>
+            <div class="phase-step active">
+                <div class="phase-circle">2</div>
+                <div class="phase-label">Suggestions</div>
+            </div>
+            <div class="phase-step">
+                <div class="phase-circle">3</div>
+                <div class="phase-label">Refine</div>
+            </div>
+            <div class="phase-step">
+                <div class="phase-circle">4</div>
+                <div class="phase-label">Generate</div>
+            </div>
+        </div>
+
+        <div class="card" style="background: #f8f9fa; margin: 2rem 0;">
+            <h3>Original Material:</h3>
+            <p style="white-space: pre-wrap;">{{ session['original_material'] }}</p>
+        </div>
+
+        <h3>Students Involved:</h3>
+        <div style="margin-bottom: 2rem;">
+            {% for student in students %}
+            <span style="display: inline-block; background: var(--accent-orange); color: white; padding: 0.4rem 0.8rem; border-radius: 20px; margin: 0.25rem; font-size: 0.9rem;">
+                {{ student['first_name'] }} {{ student['last_name'] }}
+            </span>
+            {% endfor %}
+        </div>
+
+        <form method="POST" action="{{ url_for('differentiation.refine_suggestions', session_id=session_id) }}">
+            <div style="margin-bottom: 1.5rem;">
+                <button type="button" id="select-all" class="btn btn-secondary">Select All</button>
+                <button type="button" id="deselect-all" class="btn btn-secondary">Deselect All</button>
+            </div>
+
+            {% if suggestions %}
+                {% for i, suggestion in enumerate(suggestions) %}
+                <div class="suggestion-item">
+                    <div class="suggestion-checkbox">
+                        <input type="checkbox" id="suggestion_{{ i }}" name="approved" value="{{ i }}" checked>
+                        <div>
+                            <div class="suggestion-text">{{ suggestion['text'] }}</div>
+                            <div class="suggestion-meta">
+                                Applies to: {{ suggestion['applies_to']|join(', ') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="alert alert-warning">
+                    No suggestions were generated. Please check your Gemini API key and try again.
+                </div>
+            {% endif %}
+
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Continue to Generate Content →</button>
+                <a href="{{ url_for('differentiation.dashboard') }}" class="btn btn-secondary">Save for Later</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

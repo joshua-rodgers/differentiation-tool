@@ -1,0 +1,53 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}Groups - DiffF{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+            <h1 class="card-title" style="margin: 0;">Student Groups</h1>
+            <a href="{{ url_for('differentiation.add_group') }}" class="btn btn-primary">Create Group</a>
+        </div>
+
+        {% if groups %}
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Group Name</th>
+                        <th>Description</th>
+                        <th>Members</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for group in groups %}
+                    <tr>
+                        <td data-label="Group Name">{{ group['name'] }}</td>
+                        <td data-label="Description">{{ group['description'] or 'No description' }}</td>
+                        <td data-label="Members">{{ group['member_count'] }} student{{ 's' if group['member_count'] != 1 else '' }}</td>
+                        <td data-label="Actions">
+                            <div class="table-actions">
+                                <a href="{{ url_for('differentiation.edit_group', group_id=group['id']) }}" class="btn btn-secondary">Edit</a>
+                                <form method="POST" action="{{ url_for('differentiation.delete_group', group_id=group['id']) }}" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">📁</div>
+            <p class="empty-state-text">You haven't created any groups yet.</p>
+            <p class="text-muted">Groups help you organize students for easier differentiation.</p>
+            <a href="{{ url_for('differentiation.add_group') }}" class="btn btn-primary">Create Your First Group</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
