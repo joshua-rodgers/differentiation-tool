@@ -1,0 +1,50 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}Differentiated Content - DiffF{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card card-accent">
+        <h1 class="card-title">Your Differentiated Lesson</h1>
+        <p class="card-subtitle">Phase 4: Review and save your differentiated content</p>
+
+        <div class="phase-indicator">
+            <div class="phase-step completed">
+                <div class="phase-circle">✓</div>
+                <div class="phase-label">Input</div>
+            </div>
+            <div class="phase-step completed">
+                <div class="phase-circle">✓</div>
+                <div class="phase-label">Suggestions</div>
+            </div>
+            <div class="phase-step completed">
+                <div class="phase-circle">✓</div>
+                <div class="phase-label">Refine</div>
+            </div>
+            <div class="phase-step active">
+                <div class="phase-circle">4</div>
+                <div class="phase-label">Generate</div>
+            </div>
+        </div>
+
+        <h2 style="margin-top: 2rem;">{{ session['title'] }}</h2>
+
+        <div class="lesson-content">
+            {{ final_content|safe if '<' in final_content else final_content }}
+        </div>
+
+        <div class="btn-group">
+            <form method="POST" action="{{ url_for('differentiation.save_to_library', session_id=session_id) }}" style="flex: 1;">
+                <button type="submit" class="btn btn-success btn-block">Save to Lesson Library</button>
+            </form>
+            <button onclick="window.print()" class="btn btn-secondary">Print</button>
+            <a href="{{ url_for('differentiation.dashboard') }}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Original Material (for reference)</h3>
+        <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 8px; white-space: pre-wrap;">{{ session['original_material'] }}</div>
+    </div>
+</div>
+{% endblock %}

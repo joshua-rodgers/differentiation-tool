@@ -1,0 +1,45 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}DiffF - AI-Powered Curriculum Differentiation{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="container">
+        <div class="card hero-card card-accent">
+            <h1 class="hero-title">
+                An AI powered tool for creating differentiated CS curriculum.
+            </h1>
+            <p class="hero-subtitle">
+                Adapt your computer science lessons for students with IEPs, 504 plans,
+                and special accommodations using the power of Google Gemini AI.
+            </p>
+            <div class="btn-group">
+                <a href="{{ url_for('differentiation.signup') }}" class="btn btn-primary">Get Started</a>
+                <a href="{{ url_for('differentiation.login') }}" class="btn btn-secondary">Login</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2 class="card-title">How It Works</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                <div>
+                    <h3 style="color: var(--accent-orange); margin-bottom: 0.75rem;">1. Input Your Lesson</h3>
+                    <p>Paste your original assignment or lesson material into the tool.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-orange); margin-bottom: 0.75rem;">2. Select Students</h3>
+                    <p>Choose which students or groups need differentiation.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-orange); margin-bottom: 0.75rem;">3. Review AI Suggestions</h3>
+                    <p>Get tailored differentiation suggestions from Gemini AI.</p>
+                </div>
+                <div>
+                    <h3 style="color: var(--accent-orange); margin-bottom: 0.75rem;">4. Generate & Save</h3>
+                    <p>Create the final differentiated lesson and save it to your library.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

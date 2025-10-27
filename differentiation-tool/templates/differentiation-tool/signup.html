@@ -1,0 +1,34 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}Sign Up - DiffF{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card card-accent" style="max-width: 500px; margin: 3rem auto;">
+        <h1 class="card-title text-center">Create Account</h1>
+        <form method="POST" data-validate>
+            <div class="form-group">
+                <label for="first_name" class="form-label">First Name</label>
+                <input type="text" id="first_name" name="first_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="last_name" class="form-label">Last Name</label>
+                <input type="text" id="last_name" name="last_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required minlength="6">
+                <small class="text-muted">Minimum 6 characters</small>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Sign Up</button>
+        </form>
+        <p class="text-center mt-3">
+            Already have an account? <a href="{{ url_for('differentiation.login') }}" style="color: var(--accent-orange);">Login</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

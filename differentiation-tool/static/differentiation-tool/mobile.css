@@ -1,0 +1,440 @@
+/* ============= MOBILE STYLES ============= */
+/* Optimized for screens up to 768px, including iPhone SE (375px) */
+
+@media (max-width: 768px) {
+    /* ============= NAVIGATION ============= */
+    .navbar {
+        padding: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .navbar-brand {
+        font-size: 1.5rem;
+    }
+
+    .hamburger {
+        display: flex;
+        order: 3;
+    }
+
+    .navbar-menu {
+        display: none;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        margin-top: 1rem;
+        order: 4;
+    }
+
+    .navbar-menu.active {
+        display: flex;
+    }
+
+    .navbar-menu li {
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .navbar-menu a {
+        display: block;
+        padding: 1rem;
+        width: 100%;
+    }
+
+    .btn-login {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Hamburger animation */
+    .hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    /* ============= MAIN CONTENT ============= */
+    .container {
+        padding: 1rem;
+    }
+
+    .card {
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border-radius: 10px;
+    }
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    /* ============= HERO/LANDING ============= */
+    .hero {
+        min-height: 60vh;
+        padding: 1rem;
+    }
+
+    .hero-title {
+        font-size: 1.75rem;
+        line-height: 1.4;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    /* ============= BUTTONS ============= */
+    .btn {
+        padding: 0.65rem 1.2rem;
+        font-size: 0.95rem;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .btn-group .btn {
+        width: 100%;
+    }
+
+    /* ============= FORMS ============= */
+    .form-control {
+        font-size: 16px; /* Prevents zoom on iOS */
+        padding: 0.65rem;
+    }
+
+    textarea.form-control {
+        min-height: 120px;
+    }
+
+    .form-label {
+        font-size: 0.95rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    /* Checkboxes and radios */
+    .form-check {
+        padding: 0.5rem 0;
+    }
+
+    .form-check-input {
+        width: 20px;
+        height: 20px;
+        margin-right: 0.5rem;
+    }
+
+    .form-check-label {
+        font-size: 0.95rem;
+        line-height: 1.4;
+    }
+
+    /* ============= DASHBOARD ============= */
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .stat-card {
+        padding: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 2.5rem;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+    }
+
+    /* ============= TABLES ============= */
+    /* Convert tables to stacked cards on mobile */
+    .table-container {
+        overflow-x: visible;
+    }
+
+    .table {
+        display: block;
+    }
+
+    .table thead {
+        display: none;
+    }
+
+    .table tbody {
+        display: block;
+    }
+
+    .table tr {
+        display: block;
+        margin-bottom: 1rem;
+        border: 1px solid var(--border-light);
+        border-radius: 8px;
+        padding: 1rem;
+        background: var(--bg-card);
+        box-shadow: 0 2px 8px var(--shadow);
+    }
+
+    .table td {
+        display: block;
+        text-align: left;
+        padding: 0.5rem 0;
+        border: none;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    .table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 0;
+        width: 45%;
+        padding-right: 10px;
+        font-weight: bold;
+        color: var(--text-dark);
+    }
+
+    /* Table actions stack vertically */
+    .table-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+        padding-top: 0.5rem;
+    }
+
+    .table-actions .btn {
+        width: 100%;
+    }
+
+    /* ============= LISTS ============= */
+    .list-group-item {
+        padding: 0.75rem;
+        font-size: 0.95rem;
+    }
+
+    /* ============= PHASE INDICATOR ============= */
+    .phase-indicator {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .phase-indicator::before {
+        display: none;
+    }
+
+    .phase-step {
+        flex: 1 1 calc(50% - 1rem);
+        min-width: 120px;
+    }
+
+    .phase-circle {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+
+    .phase-label {
+        font-size: 0.75rem;
+    }
+
+    /* ============= SUGGESTIONS ============= */
+    .suggestion-item {
+        padding: 1rem;
+    }
+
+    .suggestion-text {
+        font-size: 0.95rem;
+    }
+
+    .suggestion-meta {
+        font-size: 0.85rem;
+    }
+
+    .suggestion-checkbox {
+        gap: 0.75rem;
+    }
+
+    .suggestion-checkbox input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        flex-shrink: 0;
+    }
+
+    /* ============= LESSON CONTENT ============= */
+    .lesson-content {
+        padding: 1rem;
+        font-size: 0.95rem;
+    }
+
+    .lesson-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .lesson-content h2 {
+        font-size: 1.3rem;
+    }
+
+    .lesson-content h3 {
+        font-size: 1.1rem;
+    }
+
+    .lesson-content pre {
+        padding: 0.75rem;
+        font-size: 0.85rem;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* ============= ALERTS ============= */
+    .alert {
+        padding: 0.75rem 1rem;
+        font-size: 0.95rem;
+    }
+
+    /* ============= UTILITIES ============= */
+    .mt-1, .mt-2, .mt-3, .mt-4 { margin-top: 1rem; }
+    .mb-1, .mb-2, .mb-3, .mb-4 { margin-bottom: 1rem; }
+
+    /* Hide elements on mobile */
+    .hide-mobile {
+        display: none !important;
+    }
+
+    /* Show only on mobile */
+    .show-mobile {
+        display: block !important;
+    }
+}
+
+/* ============= EXTRA SMALL SCREENS (iPhone SE: 375px) ============= */
+@media (max-width: 375px) {
+    .navbar-brand {
+        font-size: 1.3rem;
+    }
+
+    .hero-title {
+        font-size: 1.5rem;
+    }
+
+    .card {
+        padding: 1rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        padding: 0.6rem;
+    }
+
+    .phase-step {
+        flex: 1 1 100%;
+    }
+
+    .suggestion-item {
+        padding: 0.75rem;
+    }
+
+    .lesson-content {
+        padding: 0.75rem;
+    }
+}
+
+/* ============= TABLET (481px - 768px) ============= */
+@media (min-width: 481px) and (max-width: 768px) {
+    .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .phase-step {
+        flex: 1 1 calc(25% - 1rem);
+    }
+
+    .phase-indicator::before {
+        display: block;
+    }
+}
+
+/* ============= PRINT STYLES ============= */
+@media print {
+    .navbar,
+    .hamburger,
+    .btn,
+    .table-actions {
+        display: none !important;
+    }
+
+    body {
+        background: white;
+        color: black;
+    }
+
+    .card {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+
+    .lesson-content {
+        background: white;
+    }
+}
+
+/* ============= ACCESSIBILITY ============= */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============= LANDSCAPE ORIENTATION ============= */
+@media (max-width: 768px) and (orientation: landscape) {
+    .hero {
+        min-height: 100vh;
+    }
+
+    .navbar-menu.active {
+        max-height: 70vh;
+        overflow-y: auto;
+    }
+}
+
+/* ============= TOUCH OPTIMIZATION ============= */
+@media (hover: none) and (pointer: coarse) {
+    /* Increase touch targets */
+    .btn,
+    .form-check-input,
+    .navbar-menu a,
+    .hamburger {
+        min-height: 44px;
+        min-width: 44px;
+    }
+
+    /* Remove hover effects on touch devices */
+    .btn:hover,
+    .navbar-menu a:hover,
+    .table tr:hover,
+    .list-group-item:hover {
+        transform: none;
+    }
+
+    /* Add active states for touch feedback */
+    .btn:active {
+        transform: scale(0.98);
+    }
+}

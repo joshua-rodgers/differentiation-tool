@@ -1,0 +1,52 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}Students - DiffF{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+            <h1 class="card-title" style="margin: 0;">My Students</h1>
+            <a href="{{ url_for('differentiation.add_student') }}" class="btn btn-primary">Add Student</a>
+        </div>
+
+        {% if students %}
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Accommodations</th>
+                        <th>Needs</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td data-label="Name">{{ student['first_name'] }} {{ student['last_name'] }}</td>
+                        <td data-label="Accommodations">{{ student['accommodations'] or 'None specified' }}</td>
+                        <td data-label="Needs">{{ student['needs_description'][:50] if student['needs_description'] else 'None specified' }}{% if student['needs_description'] and student['needs_description']|length > 50 %}...{% endif %}</td>
+                        <td data-label="Actions">
+                            <div class="table-actions">
+                                <a href="{{ url_for('differentiation.edit_student', student_id=student['id']) }}" class="btn btn-secondary">Edit</a>
+                                <form method="POST" action="{{ url_for('differentiation.delete_student', student_id=student['id']) }}" style="display: inline;">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">👥</div>
+            <p class="empty-state-text">You haven't added any students yet.</p>
+            <a href="{{ url_for('differentiation.add_student') }}" class="btn btn-primary">Add Your First Student</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

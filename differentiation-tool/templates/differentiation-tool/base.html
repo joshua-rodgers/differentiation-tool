@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>{% block title %}DiffF - Differentiation Tool{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('differentiation.static', filename='differentiation-tool/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('differentiation.static', filename='differentiation-tool/mobile.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar">
+        <a href="{{ url_for('differentiation.landing') }}" class="navbar-brand">
+            <span class="brand-d">D</span>iffF
+        </a>
+
+        {% if session.user_id %}
+        <ul class="navbar-menu">
+            <li><a href="{{ url_for('differentiation.dashboard') }}">Dashboard</a></li>
+            <li><a href="{{ url_for('differentiation.students') }}">Students</a></li>
+            <li><a href="{{ url_for('differentiation.groups') }}">Groups</a></li>
+            <li><a href="{{ url_for('differentiation.lesson_library') }}">Library</a></li>
+            <li><a href="{{ url_for('differentiation.logout') }}" class="btn-login">Logout</a></li>
+        </ul>
+        {% else %}
+        <ul class="navbar-menu">
+            <li><a href="{{ url_for('differentiation.landing') }}">Home</a></li>
+            <li><a href="{{ url_for('differentiation.login') }}" class="btn-login">Login</a></li>
+        </ul>
+        {% endif %}
+
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="{{ url_for('differentiation.static', filename='differentiation-tool/script.js') }}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

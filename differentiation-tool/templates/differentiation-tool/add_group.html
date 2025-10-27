@@ -1,0 +1,50 @@
+{% extends "differentiation-tool/base.html" %}
+
+{% block title %}Create Group - DiffF{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card card-accent" style="max-width: 700px; margin: 2rem auto;">
+        <h1 class="card-title">Create New Group</h1>
+        <form method="POST" data-validate>
+            <div class="form-group">
+                <label for="name" class="form-label">Group Name *</label>
+                <input type="text" id="name" name="name" class="form-control"
+                       placeholder="e.g., 504 Accommodations Group" required>
+            </div>
+            <div class="form-group">
+                <label for="description" class="form-label">Description</label>
+                <textarea id="description" name="description" class="form-control"
+                          placeholder="Optional description of this group..."></textarea>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Select Students</label>
+                {% if students %}
+                    <div style="max-height: 300px; overflow-y: auto; border: 2px solid var(--border-light); border-radius: 8px; padding: 1rem;">
+                        {% for student in students %}
+                        <div class="form-check">
+                            <input type="checkbox" id="student_{{ student['id'] }}" name="students"
+                                   value="{{ student['id'] }}" class="form-check-input">
+                            <label for="student_{{ student['id'] }}" class="form-check-label">
+                                {{ student['first_name'] }} {{ student['last_name'] }}
+                                {% if student['accommodations'] %}
+                                <span class="text-muted" style="font-size: 0.85rem;">({{ student['accommodations'][:30] }}...)</span>
+                                {% endif %}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">You need to add students before creating groups.
+                        <a href="{{ url_for('differentiation.add_student') }}">Add a student</a>
+                    </p>
+                {% endif %}
+            </div>
+            <div class="btn-group">
+                <button type="submit" class="btn btn-primary">Create Group</button>
+                <a href="{{ url_for('differentiation.groups') }}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
