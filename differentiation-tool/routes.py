@@ -641,3 +641,14 @@ def delete_lesson(lesson_id):
     conn.close()
     flash('Lesson deleted successfully!', 'success')
     return redirect(url_for('differentiation.lesson_library'))
+
+@bp.route('/session/<int:session_id>/delete', methods=['POST'])
+@login_required
+def delete_session(session_id):
+    """Delete a differentiation session"""
+    conn = db.get_db()
+    conn.execute('DELETE FROM diff_sessions WHERE id = ? AND user_id = ?', (session_id, session['user_id']))
+    conn.commit()
+    conn.close()
+    flash('Session deleted successfully!', 'success')
+    return redirect(url_for('differentiation.dashboard'))
