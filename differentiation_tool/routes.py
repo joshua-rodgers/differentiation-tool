@@ -29,7 +29,7 @@ def landing():
     """Landing page"""
     if 'user_id' in session:
         return redirect(url_for('differentiation.dashboard'))
-    return render_template('differentiation-tool/landing.html')
+    return render_template('differentiation_tool/landing.html')
 
 @bp.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -43,7 +43,7 @@ def signup():
         # Validate
         if not all([email, password, first_name, last_name]):
             flash('All fields are required.', 'error')
-            return render_template('differentiation-tool/signup.html')
+            return render_template('differentiation_tool/signup.html')
 
         # Check if user exists
         conn = db.get_db()
@@ -51,7 +51,7 @@ def signup():
         if existing:
             flash('Email already registered.', 'error')
             conn.close()
-            return render_template('differentiation-tool/signup.html')
+            return render_template('differentiation_tool/signup.html')
 
         # Create user
         password_hash = generate_password_hash(password)
@@ -69,7 +69,7 @@ def signup():
         flash('Account created successfully!', 'success')
         return redirect(url_for('differentiation.dashboard'))
 
-    return render_template('differentiation-tool/signup.html')
+    return render_template('differentiation_tool/signup.html')
 
 @bp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -90,7 +90,7 @@ def login():
         else:
             flash('Invalid email or password.', 'error')
 
-    return render_template('differentiation-tool/login.html')
+    return render_template('differentiation_tool/login.html')
 
 @bp.route('/logout')
 def logout():
@@ -127,7 +127,7 @@ def dashboard():
 
     conn.close()
 
-    return render_template('differentiation-tool/dashboard.html',
+    return render_template('differentiation_tool/dashboard.html',
                          student_count=student_count,
                          group_count=group_count,
                          lesson_count=lesson_count,
@@ -147,7 +147,7 @@ def students():
         (user_id,)
     ).fetchall()
     conn.close()
-    return render_template('differentiation-tool/students.html', students=students)
+    return render_template('differentiation_tool/students.html', students=students)
 
 @bp.route('/students/add', methods=['GET', 'POST'])
 @login_required
@@ -161,7 +161,7 @@ def add_student():
 
         if not first_name or not last_name:
             flash('First and last name are required.', 'error')
-            return render_template('differentiation-tool/add_student.html')
+            return render_template('differentiation_tool/add_student.html')
 
         conn = db.get_db()
         conn.execute(
@@ -174,7 +174,7 @@ def add_student():
         flash('Student added successfully!', 'success')
         return redirect(url_for('differentiation.students'))
 
-    return render_template('differentiation-tool/add_student.html')
+    return render_template('differentiation_tool/add_student.html')
 
 @bp.route('/students/edit/<int:student_id>', methods=['GET', 'POST'])
 @login_required
@@ -206,7 +206,7 @@ def edit_student(student_id):
         flash('Student not found.', 'error')
         return redirect(url_for('differentiation.students'))
 
-    return render_template('differentiation-tool/edit_student.html', student=student)
+    return render_template('differentiation_tool/edit_student.html', student=student)
 
 @bp.route('/students/delete/<int:student_id>', methods=['POST'])
 @login_required
@@ -239,7 +239,7 @@ def groups():
     ''', (user_id,)).fetchall()
 
     conn.close()
-    return render_template('differentiation-tool/groups.html', groups=groups)
+    return render_template('differentiation_tool/groups.html', groups=groups)
 
 @bp.route('/groups/add', methods=['GET', 'POST'])
 @login_required
@@ -281,7 +281,7 @@ def add_group():
     ).fetchall()
     conn.close()
 
-    return render_template('differentiation-tool/add_group.html', students=students)
+    return render_template('differentiation_tool/add_group.html', students=students)
 
 @bp.route('/groups/edit/<int:group_id>', methods=['GET', 'POST'])
 @login_required
@@ -333,7 +333,7 @@ def edit_group(group_id):
 
     conn.close()
 
-    return render_template('differentiation-tool/edit_group.html',
+    return render_template('differentiation_tool/edit_group.html',
                          group=group, students=students, member_ids=member_ids)
 
 @bp.route('/groups/delete/<int:group_id>', methods=['POST'])
@@ -409,7 +409,7 @@ def new_differentiation():
 
     conn.close()
 
-    return render_template('differentiation-tool/new_differentiation.html',
+    return render_template('differentiation_tool/new_differentiation.html',
                          students=students, groups=groups)
 
 @bp.route('/differentiate/<int:session_id>/suggestions')
@@ -470,7 +470,7 @@ def generate_suggestions(session_id):
 
     conn.close()
 
-    return render_template('differentiation-tool/suggestions.html',
+    return render_template('differentiation_tool/suggestions.html',
                          session_id=session_id,
                          session=sess,
                          suggestions=suggestions,
@@ -550,7 +550,7 @@ def generate_final(session_id):
 
     conn.close()
 
-    return render_template('differentiation-tool/final_content.html',
+    return render_template('differentiation_tool/final_content.html',
                          session_id=session_id,
                          session=sess,
                          final_content=final_content)
@@ -609,7 +609,7 @@ def lesson_library():
 
     conn.close()
 
-    return render_template('differentiation-tool/library.html', lessons=lessons)
+    return render_template('differentiation_tool/library.html', lessons=lessons)
 
 @bp.route('/library/<int:lesson_id>')
 @login_required
@@ -629,7 +629,7 @@ def view_lesson(lesson_id):
         flash('Lesson not found.', 'error')
         return redirect(url_for('differentiation.lesson_library'))
 
-    return render_template('differentiation-tool/view_lesson.html', lesson=lesson)
+    return render_template('differentiation_tool/view_lesson.html', lesson=lesson)
 
 @bp.route('/library/<int:lesson_id>/delete', methods=['POST'])
 @login_required

@@ -61,7 +61,7 @@ def generate_suggestions(original_material, students_data):
     """
     try:
         configure_gemini()
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        model = genai.GenerativeModel('gemini-2.0-flash')
 
         # Build student profiles text
         student_profiles = []
@@ -150,7 +150,7 @@ def generate_differentiated_content(original_material, approved_suggestions):
     """
     try:
         configure_gemini()
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        model = genai.GenerativeModel('gemini-2.0-flash')
 
         suggestions_text = "\n".join([f"- {s}" for s in approved_suggestions])
 
