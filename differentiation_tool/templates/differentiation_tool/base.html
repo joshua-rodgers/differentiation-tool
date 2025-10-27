@@ -20,6 +20,9 @@
             <li><a href="{{ url_for('differentiation.students') }}">Students</a></li>
             <li><a href="{{ url_for('differentiation.groups') }}">Groups</a></li>
             <li><a href="{{ url_for('differentiation.lesson_library') }}">Library</a></li>
+            {% if session.is_admin %}
+            <li><a href="{{ url_for('differentiation.admin_dashboard') }}" style="color: var(--accent-orange); font-weight: bold;">Admin</a></li>
+            {% endif %}
             <li><a href="{{ url_for('differentiation.logout') }}" class="btn-login">Logout</a></li>
         </ul>
         {% else %}

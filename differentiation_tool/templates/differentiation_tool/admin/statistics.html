@@ -1,0 +1,95 @@
+{% extends "differentiation_tool/base.html" %}
+
+{% block title %}Statistics - Admin{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="card card-accent">
+        <h1 class="card-title">Usage Statistics</h1>
+        <a href="{{ url_for('differentiation.admin_dashboard') }}" class="btn btn-secondary">Back to Admin Dashboard</a>
+    </div>
+
+    <div class="card">
+        <h2 class="card-title">User Statistics</h2>
+        <div class="table-container">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Email</th>
+                        <th>Type</th>
+                        <th>API Requests</th>
+                        <th>Lessons Created</th>
+                        <th>Students</th>
+                        <th>Groups</th>
+                        <th>Member Since</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users_stats %}
+                    <tr>
+                        <td data-label="User">{{ user['first_name'] }} {{ user['last_name'] }}</td>
+                        <td data-label="Email">{{ user['email'] }}</td>
+                        <td data-label="Type">
+                            {% if user['is_admin'] %}<span style="color: var(--accent-orange);">Admin</span>{% else %}User{% endif %}
+                        </td>
+                        <td data-label="API Requests"><strong>{{ user['api_requests'] }}</strong></td>
+                        <td data-label="Lessons Created">{{ user['lessons_created'] }}</td>
+                        <td data-label="Students">{{ user['students_count'] }}</td>
+                        <td data-label="Groups">{{ user['groups_count'] }}</td>
+                        <td data-label="Member Since">{{ user['created_at'][:10] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {% if top_api_users %}
+    <div class="card">
+        <h2 class="card-title">Top 10 API Users</h2>
+        <div style="margin-top: 1rem;">
+            {% for user in top_api_users %}
+            <div style="margin-bottom: 1rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <strong>{{ user['first_name'] }} {{ user['last_name'] }}</strong>
+                        <div class="text-muted" style="font-size: 0.9rem;">{{ user['email'] }}</div>
+                    </div>
+                    <div style="font-size: 1.5rem; font-weight: bold; color: var(--accent-orange);">
+                        {{ user['api_count'] }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if api_usage_timeline %}
+    <div class="card">
+        <h2 class="card-title">API Usage Timeline (Last 30 Days)</h2>
+        <div style="margin-top: 1rem;">
+            {% for entry in api_usage_timeline %}
+            <div style="margin-bottom: 0.5rem;">
+                <strong>{{ entry['date'] }}:</strong> {{ entry['count'] }} requests
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if lessons_timeline %}
+    <div class="card">
+        <h2 class="card-title">Lessons Created Timeline (Last 30 Days)</h2>
+        <div style="margin-top: 1rem;">
+            {% for entry in lessons_timeline %}
+            <div style="margin-bottom: 0.5rem;">
+                <strong>{{ entry['date'] }}:</strong> {{ entry['count'] }} lessons
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
