@@ -10,7 +10,7 @@ from . import gemini_api
 bp = Blueprint('differentiation', __name__,
                template_folder='templates',
                static_folder='static',
-               url_prefix='/differentiation')
+               url_prefix='/diff')
 
 def login_required(f):
     """Decorator to require login for routes"""

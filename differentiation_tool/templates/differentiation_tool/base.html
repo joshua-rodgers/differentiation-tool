@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>{% block title %}DiffF - Differentiation Tool{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('differentiation.static', filename='differentiation-tool/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('differentiation.static', filename='differentiation-tool/mobile.css') }}">
+    <link rel="stylesheet" href="{{ url_for('differentiation.static', filename='differentiation_tool/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('differentiation.static', filename='differentiation_tool/mobile.css') }}">
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -52,7 +52,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <script src="{{ url_for('differentiation.static', filename='differentiation-tool/script.js') }}"></script>
+    <script src="{{ url_for('differentiation.static', filename='differentiation_tool/script.js') }}"></script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>
