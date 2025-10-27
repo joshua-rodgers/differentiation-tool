@@ -500,6 +500,10 @@ def generate_suggestions(session_id):
         suggestions_json = sess['suggestions']
         suggestions = json.loads(suggestions_json)
 
+    # Convert suggestion text from markdown to HTML for display
+    for suggestion in suggestions:
+        suggestion['text_html'] = gemini_api.markdown_to_html(suggestion['text'])
+
     conn.close()
 
     return render_template('differentiation_tool/suggestions.html',
