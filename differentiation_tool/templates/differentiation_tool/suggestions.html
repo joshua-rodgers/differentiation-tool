@@ -53,7 +53,7 @@
                     <div class="suggestion-checkbox">
                         <input type="checkbox" id="suggestion_{{ loop.index0 }}" name="approved" value="{{ loop.index0 }}" checked>
                         <div>
-                            <div class="suggestion-text">{{ suggestion['text'] }}</div>
+                            <div class="suggestion-text">{{ suggestion['text_html']|safe }}</div>
                             <div class="suggestion-meta">
                                 Applies to: {{ suggestion['applies_to']|join(', ') }}
                             </div>

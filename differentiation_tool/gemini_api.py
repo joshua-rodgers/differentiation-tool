@@ -3,6 +3,12 @@ import json
 import re
 import markdown
 import google.generativeai as genai
+from google.generativeai import caching
+import datetime
+
+# Cache object for curriculum standards (module-level to persist across requests)
+_curriculum_cache = None
+_cache_created_at = None
 
 def configure_gemini():
     """Configure the Gemini API with API key from environment"""
@@ -10,6 +16,73 @@ def configure_gemini():
     if not api_key:
         raise ValueError("GEMINI_API_KEY environment variable not set")
     genai.configure(api_key=api_key)
+
+def load_curriculum_standards():
+    """Load curriculum standards from file"""
+    curriculum_path = os.path.join(
+        os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+        'Intro_CS.md'
+    )
+
+    try:
+        with open(curriculum_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    except FileNotFoundError:
+        print(f"Warning: Curriculum standards file not found at {curriculum_path}")
+        return ""
+
+def get_or_create_curriculum_cache():
+    """Get existing cache or create new one for curriculum standards"""
+    global _curriculum_cache, _cache_created_at
+
+    configure_gemini()
+
+    # Check if cache exists and is still valid (refresh every 6 hours)
+    if _curriculum_cache and _cache_created_at:
+        age = datetime.datetime.now() - _cache_created_at
+        if age.total_seconds() < 6 * 3600:  # 6 hours
+            return _curriculum_cache
+
+    # Load curriculum standards
+    curriculum_text = load_curriculum_standards()
+
+    if not curriculum_text:
+        return None
+
+    try:
+        # Create a new cache with the curriculum standards
+        # Cache will expire after 1 hour by default
+        cache = caching.CachedContent.create(
+            model='models/gemini-2.0-flash-exp',
+            display_name='intro_cs_curriculum',
+            system_instruction=f"""You are an expert in educational differentiation for students with IEPs, 504 plans, and special accommodations.
+
+You have deep knowledge of the Introduction to Computer Science curriculum standards provided below. Use this curriculum knowledge to inform all differentiation suggestions and ensure they align with course objectives and standards.
+
+CURRICULUM STANDARDS:
+{curriculum_text}
+
+When generating differentiation suggestions:
+- Align modifications with the relevant curriculum standards
+- Reference specific units and learning objectives when appropriate
+- Ensure adaptations maintain academic rigor and course goals
+- Apply the differentiation strategies outlined in the standards
+- Consider the proficiency levels and assessment standards
+""",
+            contents=[],
+            ttl=datetime.timedelta(hours=1),
+        )
+
+        _curriculum_cache = cache
+        _cache_created_at = datetime.datetime.now()
+
+        print(f"Created curriculum cache: {cache.name}")
+        return cache
+
+    except Exception as e:
+        print(f"Error creating cache: {e}")
+        print("Falling back to non-cached mode")
+        return None
 
 def markdown_to_html(text):
     """
@@ -60,8 +133,16 @@ def generate_suggestions(original_material, students_data):
         }
     """
     try:
-        configure_gemini()
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        # Try to use cached curriculum context
+        cache = get_or_create_curriculum_cache()
+
+        if cache:
+            # Use model with cached curriculum context
+            model = genai.GenerativeModel.from_cached_content(cached_content=cache)
+        else:
+            # Fall back to non-cached model
+            configure_gemini()
+            model = genai.GenerativeModel('gemini-2.0-flash-exp')
 
         # Build student profiles text
         student_profiles = []
@@ -149,8 +230,16 @@ def generate_differentiated_content(original_material, approved_suggestions):
         HTML string containing the formatted differentiated content
     """
     try:
-        configure_gemini()
-        model = genai.GenerativeModel('gemini-2.0-flash-exp')
+        # Try to use cached curriculum context
+        cache = get_or_create_curriculum_cache()
+
+        if cache:
+            # Use model with cached curriculum context
+            model = genai.GenerativeModel.from_cached_content(cached_content=cache)
+        else:
+            # Fall back to non-cached model
+            configure_gemini()
+            model = genai.GenerativeModel('gemini-2.0-flash-exp')
 
         suggestions_text = "\n".join([f"- {s}" for s in approved_suggestions])
 
