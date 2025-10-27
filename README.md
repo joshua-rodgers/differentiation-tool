@@ -19,20 +19,20 @@ An AI-powered Flask blueprint that helps high school computer science teachers c
 ## Project Structure
 
 ```
-differentiation-tool/
+differentiation_tool/
 ├── app.py                          # Standalone test application
 ├── requirements.txt                # Python dependencies
 ├── README.md                       # This file
 ├── user_flow.md                    # User workflow documentation
 ├── difff_landing.png               # Design mockup
-└── differentiation-tool/           # Blueprint directory
+└── differentiation_tool/           # Blueprint directory
     ├── __init__.py                 # Blueprint initialization
     ├── routes.py                   # All route handlers
     ├── db.py                       # Database functions (auto-initializes)
     ├── gemini_api.py               # Google Gemini API integration
     ├── differentiation.db          # SQLite database (created on first run)
     ├── templates/
-    │   └── differentiation-tool/   # HTML templates
+    │   └── differentiation_tool/   # HTML templates
     │       ├── base.html
     │       ├── landing.html
     │       ├── login.html
@@ -46,7 +46,7 @@ differentiation-tool/
     │       ├── library.html
     │       └── view_lesson.html
     └── static/
-        └── differentiation-tool/   # CSS and JavaScript
+        └── differentiation_tool/   # CSS and JavaScript
             ├── style.css           # Main styles with dark theme
             ├── mobile.css          # Mobile-specific styles
             └── script.js           # Client-side functionality
@@ -104,32 +104,27 @@ differentiation-tool/
 
 9. **Open your browser and visit**
    ```
-   http://localhost:5000/differentiation
+   http://localhost:5000/diff
    ```
 
 ### Deployment on PythonAnywhere
 
-1. **Upload the `differentiation-tool` directory** to your PythonAnywhere account
+1. **Upload the `differentiation_tool` directory** to your PythonAnywhere account
 
 2. **In your main Flask application file** (usually `flask_app.py` or similar):
    ```python
    from flask import Flask
    import sys
-   import importlib.util
-   import os
 
    app = Flask(__name__)
    app.config['SECRET_KEY'] = 'your-production-secret-key'
 
-   # Import the blueprint
-   blueprint_path = '/home/yourusername/differentiation-tool/__init__.py'
-   spec = importlib.util.spec_from_file_location("differentiation_tool", blueprint_path)
-   diff_module = importlib.util.module_from_spec(spec)
-   sys.modules['differentiation_tool'] = diff_module
-   spec.loader.exec_module(diff_module)
+   # Add the directory containing differentiation_tool to Python path
+   sys.path.insert(0, '/home/yourusername')
 
-   # Register the blueprint
-   app.register_blueprint(diff_module.bp)
+   # Import and register the blueprint
+   from differentiation_tool import bp
+   app.register_blueprint(bp)
 
    # Your other blueprints...
    ```
@@ -140,6 +135,8 @@ differentiation-tool/
    - Add `GEMINI_API_KEY` with your API key
 
 4. **Reload your web app**
+
+The blueprint will be available at `/diff` (e.g., `https://yourusername.pythonanywhere.com/diff`)
 
 ## Usage Guide
 

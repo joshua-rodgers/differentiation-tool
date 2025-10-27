@@ -7,13 +7,11 @@ will be registered in the main application file.
 To run locally:
 1. Set your GEMINI_API_KEY environment variable
 2. Run: python app.py
-3. Visit: http://localhost:5000/differentiation
+3. Visit: http://localhost:5000/diff
 """
 
 from flask import Flask, redirect
 import os
-import sys
-import importlib.util
 
 # Create Flask app
 app = Flask(__name__)
@@ -21,21 +19,15 @@ app = Flask(__name__)
 # Configuration
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key-change-in-production')
 
-# Import the blueprint from the hyphenated directory name
-# Using importlib since "differentiation-tool" can't be imported directly
-blueprint_path = os.path.join(os.path.dirname(__file__), 'differentiation-tool', '__init__.py')
-spec = importlib.util.spec_from_file_location("differentiation_tool", blueprint_path)
-differentiation_module = importlib.util.module_from_spec(spec)
-sys.modules['differentiation_tool'] = differentiation_module
-spec.loader.exec_module(differentiation_module)
+# Import and register the blueprint
+from differentiation_tool import bp
 
-# Register the blueprint - this will automatically initialize the database
-app.register_blueprint(differentiation_module.bp)
+app.register_blueprint(bp)
 
 # Root route redirects to blueprint
 @app.route('/')
 def index():
-    return redirect('/differentiation')
+    return redirect('/diff')
 
 if __name__ == '__main__':
     # Check for Gemini API key
