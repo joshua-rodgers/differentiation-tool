@@ -22,6 +22,26 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def admin_required(f):
+    """Decorator to require admin access for routes"""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Please log in to access this page.', 'warning')
+            return redirect(url_for('differentiation.login'))
+
+        # Check if user is admin
+        conn = db.get_db()
+        user = conn.execute('SELECT is_admin FROM users WHERE id = ?', (session['user_id'],)).fetchone()
+        conn.close()
+
+        if not user or not user['is_admin']:
+            flash('You do not have permission to access this page.', 'error')
+            return redirect(url_for('differentiation.dashboard'))
+
+        return f(*args, **kwargs)
+    return decorated_function
+
 # ============= LANDING AND AUTH ROUTES =============
 
 @bp.route('/')
@@ -53,21 +73,18 @@ def signup():
             conn.close()
             return render_template('differentiation_tool/signup.html')
 
-        # Create user
+        # Create user (is_active=0 by default, requires admin approval)
         password_hash = generate_password_hash(password)
         cursor = conn.execute(
-            'INSERT INTO users (email, password_hash, first_name, last_name) VALUES (?, ?, ?, ?)',
+            'INSERT INTO users (email, password_hash, first_name, last_name, is_admin, is_active) VALUES (?, ?, ?, ?, 0, 0)',
             (email, password_hash, first_name, last_name)
         )
         conn.commit()
-        user_id = cursor.lastrowid
         conn.close()
 
-        # Log in
-        session['user_id'] = user_id
-        session['user_name'] = f"{first_name} {last_name}"
-        flash('Account created successfully!', 'success')
-        return redirect(url_for('differentiation.dashboard'))
+        # Don't log in - account needs approval
+        flash('Account created! Your account is pending approval by an administrator. You will be able to log in once approved.', 'success')
+        return redirect(url_for('differentiation.login'))
 
     return render_template('differentiation_tool/signup.html')
 
@@ -83,10 +100,22 @@ def login():
         conn.close()
 
         if user and check_password_hash(user['password_hash'], password):
+            # Check if account is active
+            if not user['is_active']:
+                flash('Your account is pending approval by an administrator. Please wait for activation.', 'warning')
+                return render_template('differentiation_tool/login.html')
+
             session['user_id'] = user['id']
             session['user_name'] = f"{user['first_name']} {user['last_name']}"
+            session['is_admin'] = user['is_admin']
+
             flash('Logged in successfully!', 'success')
-            return redirect(url_for('differentiation.dashboard'))
+
+            # Redirect to admin dashboard if admin
+            if user['is_admin']:
+                return redirect(url_for('differentiation.admin_dashboard'))
+            else:
+                return redirect(url_for('differentiation.dashboard'))
         else:
             flash('Invalid email or password.', 'error')
 
@@ -455,6 +484,9 @@ def generate_suggestions(session_id):
             )
             suggestions_json = json.dumps(suggestions)
 
+            # Track API usage
+            db.track_api_usage(user_id, 'generate_suggestions', 'Gemini API')
+
             conn.execute(
                 'UPDATE diff_sessions SET suggestions = ?, phase = ? WHERE id = ?',
                 (suggestions_json, 'review_suggestions', session_id)
@@ -537,6 +569,9 @@ def generate_final(session_id):
                 suggestion_texts
             )
 
+            # Track API usage
+            db.track_api_usage(user_id, 'generate_differentiated_content', 'Gemini API')
+
             conn.execute(
                 'UPDATE diff_sessions SET final_content = ?, phase = ?, updated_at = ? WHERE id = ?',
                 (final_content, 'completed', datetime.now(), session_id)
@@ -589,6 +624,9 @@ def save_to_library(session_id):
 
     conn.commit()
     conn.close()
+
+    # Update user statistics
+    db.update_user_stats(user_id)
 
     flash('Lesson saved to your library!', 'success')
     return redirect(url_for('differentiation.lesson_library'))
@@ -652,3 +690,55 @@ def delete_session(session_id):
     conn.close()
     flash('Session deleted successfully!', 'success')
     return redirect(url_for('differentiation.dashboard'))
+
+# ============= ADMIN ROUTES =============
+
+from . import admin_routes
+
+@bp.route('/admin')
+@admin_required
+def admin_dashboard():
+    """Admin dashboard"""
+    return admin_routes.admin_dashboard_view()
+
+@bp.route('/admin/users')
+@admin_required
+def admin_users():
+    """Manage users"""
+    return admin_routes.manage_users_view()
+
+@bp.route('/admin/users/create', methods=['GET', 'POST'])
+@admin_required
+def admin_create_user():
+    """Create a user"""
+    return admin_routes.create_user_view()
+
+@bp.route('/admin/users/edit/<int:user_id>', methods=['GET', 'POST'])
+@admin_required
+def admin_edit_user(user_id):
+    """Edit a user"""
+    return admin_routes.edit_user_view(user_id)
+
+@bp.route('/admin/users/delete/<int:user_id>', methods=['POST'])
+@admin_required
+def admin_delete_user(user_id):
+    """Delete a user"""
+    return admin_routes.delete_user_view(user_id)
+
+@bp.route('/admin/users/bulk-delete', methods=['POST'])
+@admin_required
+def admin_bulk_delete_users():
+    """Bulk delete users"""
+    return admin_routes.bulk_delete_users_view()
+
+@bp.route('/admin/users/approve/<int:user_id>', methods=['POST'])
+@admin_required
+def admin_approve_user(user_id):
+    """Approve a user"""
+    return admin_routes.approve_user_view(user_id)
+
+@bp.route('/admin/statistics')
+@admin_required
+def admin_statistics():
+    """View statistics"""
+    return admin_routes.statistics_view()
