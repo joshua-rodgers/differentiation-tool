@@ -48,10 +48,10 @@
             </div>
 
             {% if suggestions %}
-                {% for i, suggestion in enumerate(suggestions) %}
+                {% for suggestion in suggestions %}
                 <div class="suggestion-item">
                     <div class="suggestion-checkbox">
-                        <input type="checkbox" id="suggestion_{{ i }}" name="approved" value="{{ i }}" checked>
+                        <input type="checkbox" id="suggestion_{{ loop.index0 }}" name="approved" value="{{ loop.index0 }}" checked>
                         <div>
                             <div class="suggestion-text">{{ suggestion['text'] }}</div>
                             <div class="suggestion-meta">

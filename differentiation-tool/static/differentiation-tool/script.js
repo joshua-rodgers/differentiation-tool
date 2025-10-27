@@ -161,8 +161,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // Loading state for buttons - listen to form submit, not button click
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
+    const allForms = document.querySelectorAll('form');
+    allForms.forEach(form => {
         const submitButton = form.querySelector('button[type="submit"]');
         if (submitButton) {
             // Store original button text
