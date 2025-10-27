@@ -18,7 +18,7 @@
         </div>
 
         <div class="lesson-content">
-            {{ lesson['differentiated_content']|safe if '<' in lesson['differentiated_content'] else lesson['differentiated_content'] }}
+            {{ lesson['differentiated_content']|safe }}
         </div>
     </div>
 
