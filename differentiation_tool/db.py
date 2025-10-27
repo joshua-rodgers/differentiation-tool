@@ -26,7 +26,45 @@ def init_db():
             password_hash TEXT NOT NULL,
             first_name TEXT NOT NULL,
             last_name TEXT NOT NULL,
+            is_admin INTEGER DEFAULT 0,
+            is_active INTEGER DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
+    # Add is_admin and is_active columns if they don't exist (migration)
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN is_admin INTEGER DEFAULT 0')
+    except sqlite3.OperationalError:
+        pass  # Column already exists
+
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN is_active INTEGER DEFAULT 0')
+    except sqlite3.OperationalError:
+        pass  # Column already exists
+
+    # API usage tracking table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS api_usage (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER NOT NULL,
+            endpoint TEXT NOT NULL,
+            request_type TEXT NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
+        )
+    ''')
+
+    # User statistics summary table (for quick lookups)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS user_stats (
+            user_id INTEGER PRIMARY KEY,
+            api_requests_count INTEGER DEFAULT 0,
+            lessons_created_count INTEGER DEFAULT 0,
+            students_count INTEGER DEFAULT 0,
+            groups_count INTEGER DEFAULT 0,
+            last_updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
         )
     ''')
 
@@ -111,6 +149,59 @@ def init_db():
             FOREIGN KEY (session_id) REFERENCES diff_sessions (id) ON DELETE SET NULL
         )
     ''')
+
+    conn.commit()
+    conn.close()
+
+def track_api_usage(user_id, endpoint, request_type):
+    """Track API usage for statistics"""
+    conn = get_db()
+    conn.execute(
+        'INSERT INTO api_usage (user_id, endpoint, request_type) VALUES (?, ?, ?)',
+        (user_id, endpoint, request_type)
+    )
+
+    # Update user stats
+    conn.execute('''
+        INSERT INTO user_stats (user_id, api_requests_count, last_updated)
+        VALUES (?, 1, CURRENT_TIMESTAMP)
+        ON CONFLICT(user_id) DO UPDATE SET
+            api_requests_count = api_requests_count + 1,
+            last_updated = CURRENT_TIMESTAMP
+    ''', (user_id,))
+
+    conn.commit()
+    conn.close()
+
+def update_user_stats(user_id):
+    """Update statistics for a user"""
+    conn = get_db()
+
+    # Count lessons
+    lessons_count = conn.execute(
+        'SELECT COUNT(*) as count FROM lessons WHERE user_id = ?', (user_id,)
+    ).fetchone()['count']
+
+    # Count students
+    students_count = conn.execute(
+        'SELECT COUNT(*) as count FROM students WHERE user_id = ?', (user_id,)
+    ).fetchone()['count']
+
+    # Count groups
+    groups_count = conn.execute(
+        'SELECT COUNT(*) as count FROM groups WHERE user_id = ?', (user_id,)
+    ).fetchone()['count']
+
+    # Update stats
+    conn.execute('''
+        INSERT INTO user_stats (user_id, lessons_created_count, students_count, groups_count, last_updated)
+        VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)
+        ON CONFLICT(user_id) DO UPDATE SET
+            lessons_created_count = ?,
+            students_count = ?,
+            groups_count = ?,
+            last_updated = CURRENT_TIMESTAMP
+    ''', (user_id, lessons_count, students_count, groups_count, lessons_count, students_count, groups_count))
 
     conn.commit()
     conn.close()
