@@ -160,26 +160,27 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Loading state for buttons
-    const submitButtons = document.querySelectorAll('button[type="submit"]');
-    submitButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const form = button.closest('form');
-            if (form && form.checkValidity()) {
-                button.disabled = true;
-                button.textContent = 'Loading...';
+    // Loading state for buttons - listen to form submit, not button click
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) {
+            // Store original button text
+            submitButton.setAttribute('data-original-text', submitButton.textContent);
 
-                // Re-enable after 30 seconds as failsafe
-                setTimeout(() => {
-                    button.disabled = false;
-                    button.textContent = button.getAttribute('data-original-text') || 'Submit';
-                }, 30000);
-            }
-        });
-    });
+            form.addEventListener('submit', function(e) {
+                // Only show loading if form is valid
+                if (form.checkValidity()) {
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Loading...';
 
-    // Store original button text
-    submitButtons.forEach(button => {
-        button.setAttribute('data-original-text', button.textContent);
+                    // Re-enable after 30 seconds as failsafe (in case of network issues)
+                    setTimeout(() => {
+                        submitButton.disabled = false;
+                        submitButton.textContent = submitButton.getAttribute('data-original-text') || 'Submit';
+                    }, 30000);
+                }
+            });
+        }
     });
 });
