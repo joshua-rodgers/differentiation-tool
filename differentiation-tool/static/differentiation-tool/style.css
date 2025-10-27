@@ -72,8 +72,8 @@ body {
 }
 
 .btn-login {
-    background: var(--text-light);
-    color: var(--text-dark);
+    background: var(--text-light) !important;
+    color: var(--text-dark) !important;
     padding: 0.6rem 1.5rem;
     border-radius: 25px;
     text-decoration: none;
@@ -82,8 +82,8 @@ body {
 }
 
 .btn-login:hover {
-    background: var(--accent-orange);
-    color: var(--text-light);
+    background: var(--accent-orange) !important;
+    color: var(--text-light) !important;
     transform: translateY(-2px);
 }
 
@@ -414,45 +414,155 @@ textarea.form-control {
 
 /* ============= LESSON CONTENT ============= */
 .lesson-content {
-    background: #f8f9fa;
+    background: #ffffff;
     padding: 2rem;
     border-radius: 8px;
     margin: 1.5rem 0;
     line-height: 1.8;
+    color: var(--text-dark);
 }
 
-.lesson-content h1,
-.lesson-content h2,
+.lesson-content h1 {
+    color: var(--text-dark);
+    font-size: 2rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-orange);
+}
+
+.lesson-content h1:first-child {
+    margin-top: 0;
+}
+
+.lesson-content h2 {
+    color: var(--text-dark);
+    font-size: 1.6rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
 .lesson-content h3 {
     color: var(--text-dark);
+    font-size: 1.3rem;
     margin-top: 1.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.lesson-content h4 {
+    color: var(--text-dark);
+    font-size: 1.1rem;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .lesson-content p {
     margin-bottom: 1rem;
+    color: var(--text-dark);
 }
 
 .lesson-content ul,
 .lesson-content ol {
     margin-left: 2rem;
     margin-bottom: 1rem;
+    padding-left: 1rem;
 }
 
+.lesson-content li {
+    margin-bottom: 0.5rem;
+}
+
+.lesson-content ul ul,
+.lesson-content ol ol,
+.lesson-content ul ol,
+.lesson-content ol ul {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.lesson-content strong {
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.lesson-content em {
+    font-style: italic;
+}
+
+/* Inline code */
 .lesson-content code {
     background: #e9ecef;
-    padding: 0.2rem 0.4rem;
+    padding: 0.2rem 0.5rem;
     border-radius: 4px;
-    font-family: 'Courier New', monospace;
+    font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.9em;
+    color: #c7254e;
+    border: 1px solid #ddd;
 }
 
+/* Code blocks */
 .lesson-content pre {
-    background: #2a2a2a;
-    color: #f8f9fa;
-    padding: 1rem;
+    background: #2d2d2d;
+    color: #f8f8f2;
+    padding: 1.5rem;
     border-radius: 8px;
     overflow-x: auto;
-    margin: 1rem 0;
+    margin: 1.5rem 0;
+    border: 1px solid #444;
+    line-height: 1.6;
+}
+
+.lesson-content pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    color: #f8f8f2;
+    border: none;
+    font-size: 0.95em;
+    display: block;
+    white-space: pre;
+}
+
+/* Tables */
+.lesson-content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+    background: white;
+}
+
+.lesson-content table th,
+.lesson-content table td {
+    padding: 0.75rem;
+    border: 1px solid var(--border-light);
+    text-align: left;
+}
+
+.lesson-content table th {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+.lesson-content table tr:nth-child(even) {
+    background: #f8f9fa;
+}
+
+/* Blockquotes */
+.lesson-content blockquote {
+    border-left: 4px solid var(--accent-orange);
+    padding-left: 1.5rem;
+    margin: 1.5rem 0;
+    color: var(--text-gray);
+    font-style: italic;
+}
+
+/* Horizontal rules */
+.lesson-content hr {
+    border: none;
+    border-top: 2px solid var(--border-light);
+    margin: 2rem 0;
 }
 
 /* ============= UTILITIES ============= */

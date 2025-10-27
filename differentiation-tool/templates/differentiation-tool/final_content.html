@@ -30,7 +30,7 @@
         <h2 style="margin-top: 2rem;">{{ session['title'] }}</h2>
 
         <div class="lesson-content">
-            {{ final_content|safe if '<' in final_content else final_content }}
+            {{ final_content|safe }}
         </div>
 
         <div class="btn-group">

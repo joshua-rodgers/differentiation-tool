@@ -1,5 +1,7 @@
 import os
 import json
+import re
+import markdown
 import google.generativeai as genai
 
 def configure_gemini():
@@ -8,6 +10,39 @@ def configure_gemini():
     if not api_key:
         raise ValueError("GEMINI_API_KEY environment variable not set")
     genai.configure(api_key=api_key)
+
+def markdown_to_html(text):
+    """
+    Convert markdown text to clean, formatted HTML
+
+    Args:
+        text: Markdown formatted text
+
+    Returns:
+        Clean HTML string with proper formatting
+    """
+    # Remove markdown code fences if present
+    text = text.strip()
+
+    # Remove triple backtick code fences
+    text = re.sub(r'^```[\w]*\n', '', text, flags=re.MULTILINE)
+    text = re.sub(r'\n```$', '', text, flags=re.MULTILINE)
+    text = re.sub(r'^```[\w]*$', '', text, flags=re.MULTILINE)
+    text = re.sub(r'^```$', '', text, flags=re.MULTILINE)
+
+    # Convert markdown to HTML with extensions for better formatting
+    html = markdown.markdown(
+        text,
+        extensions=[
+            'fenced_code',
+            'codehilite',
+            'tables',
+            'nl2br',
+            'sane_lists'
+        ]
+    )
+
+    return html
 
 def generate_suggestions(original_material, students_data):
     """
@@ -111,7 +146,7 @@ def generate_differentiated_content(original_material, approved_suggestions):
         approved_suggestions: List of approved suggestion texts
 
     Returns:
-        String containing the differentiated content
+        HTML string containing the formatted differentiated content
     """
     try:
         configure_gemini()
@@ -133,12 +168,25 @@ Create a complete, ready-to-use lesson document that:
 3. Is clearly organized and easy to follow
 4. Preserves academic rigor while being accessible
 5. Uses clear, professional formatting with headers and sections
+6. Includes proper indentation for any code examples
+7. Makes the content print-friendly and easy to read
 
-The output should be a complete lesson document that a teacher can immediately use with their students. Format it in markdown for clarity."""
+IMPORTANT: Format your response in clean markdown. Use:
+- Headers (# ## ###) for sections
+- Code blocks with proper indentation for code examples
+- Lists for step-by-step instructions
+- Bold and italic for emphasis where appropriate
+
+Do NOT wrap your response in markdown code fences (```). Just provide the formatted content directly."""
 
         response = model.generate_content(prompt)
-        return response.text
+
+        # Convert markdown to HTML
+        html_content = markdown_to_html(response.text)
+
+        return html_content
 
     except Exception as e:
         print(f"Error generating differentiated content: {e}")
-        return f"Error generating content: {str(e)}\n\nPlease check your API configuration and try again."
+        error_html = f"<div class='error'><h3>Error Generating Content</h3><p>{str(e)}</p><p>Please check your API configuration and try again.</p></div>"
+        return error_html

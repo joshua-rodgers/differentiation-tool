@@ -371,25 +371,96 @@
 
 /* ============= PRINT STYLES ============= */
 @media print {
+    /* Hide navigation and interactive elements */
     .navbar,
     .hamburger,
     .btn,
-    .table-actions {
+    .btn-group,
+    .table-actions,
+    .phase-indicator {
         display: none !important;
     }
 
+    /* Reset backgrounds and colors for print */
     body {
-        background: white;
-        color: black;
+        background: white !important;
+        color: black !important;
     }
 
     .card {
         box-shadow: none;
-        border: 1px solid #ddd;
+        border: none;
+        background: white !important;
+        padding: 0;
+        margin: 0;
     }
 
+    .card-accent {
+        border-top: none;
+    }
+
+    /* Lesson content optimization */
     .lesson-content {
-        background: white;
+        background: white !important;
+        padding: 0;
+        margin: 0;
+        page-break-inside: avoid;
+    }
+
+    .lesson-content h1,
+    .lesson-content h2 {
+        page-break-after: avoid;
+        color: black !important;
+    }
+
+    .lesson-content h1 {
+        font-size: 20pt;
+        border-bottom: 2pt solid black;
+    }
+
+    .lesson-content h2 {
+        font-size: 16pt;
+        border-bottom: 1pt solid #666;
+    }
+
+    .lesson-content h3 {
+        font-size: 14pt;
+        color: black !important;
+    }
+
+    .lesson-content pre {
+        background: #f5f5f5 !important;
+        border: 1pt solid #999;
+        padding: 10pt;
+        page-break-inside: avoid;
+        font-size: 9pt;
+    }
+
+    .lesson-content pre code {
+        color: black !important;
+    }
+
+    .lesson-content code {
+        background: #f5f5f5;
+        border: 1pt solid #ddd;
+        padding: 2pt 4pt;
+        color: black !important;
+    }
+
+    .lesson-content table {
+        page-break-inside: avoid;
+        border: 1pt solid black;
+    }
+
+    .lesson-content table th,
+    .lesson-content table td {
+        border: 1pt solid black;
+        padding: 5pt;
+    }
+
+    /* Add page numbers */
+    @page {
+        margin: 2cm;
     }
 }
 
