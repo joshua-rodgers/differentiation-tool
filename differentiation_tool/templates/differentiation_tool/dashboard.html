@@ -4,6 +4,46 @@
 
 {% block content %}
 <div class="container">
+    <!-- API Key Section -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <div>
+                <h3 style="margin: 0 0 0.5rem 0;">API Key Status</h3>
+                {% if has_own_key %}
+                <p style="margin: 0; color: var(--success-green);">✓ Using your own API key (unlimited requests)</p>
+                {% else %}
+                <p style="margin: 0;">
+                    <span style="color: var(--warning-orange);">⚠ Using default API key</span>
+                    <br>
+                    <strong>{{ requests_remaining }}</strong> free request{{ 's' if requests_remaining != 1 else '' }} remaining
+                    {% if requests_remaining == 0 %}
+                    <br>
+                    <span style="color: var(--error-red);">Please add your own API key to continue</span>
+                    {% endif %}
+                </p>
+                {% endif %}
+            </div>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <input type="text" id="apiKeyInput" placeholder="Enter your Gemini API key"
+                       style="padding: 0.5rem; border: 1px solid #ccc; border-radius: 4px; min-width: 300px;"
+                       {% if has_own_key %}value="••••••••••••••••"{% endif %}>
+                <button id="saveApiKeyBtn" class="btn btn-primary">
+                    {% if has_own_key %}Update{% else %}Save{% endif %}
+                </button>
+            </div>
+        </div>
+        {% if not has_own_key %}
+        <div style="margin-top: 1rem; padding: 0.75rem; background: #f8f9fa; border-radius: 4px; font-size: 0.9rem;">
+            <strong>How to get a free API key:</strong>
+            <ol style="margin: 0.5rem 0 0 1.5rem; padding: 0;">
+                <li>Visit <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener noreferrer">Google AI Studio</a></li>
+                <li>Click "Create API Key"</li>
+                <li>Copy your key and paste it above</li>
+            </ol>
+        </div>
+        {% endif %}
+    </div>
+
     <div class="card">
         <h1 class="card-title">Welcome, {{ session.user_name }}!</h1>
         <p class="card-subtitle">Here's an overview of your differentiation tools.</p>
@@ -91,4 +131,44 @@
     </div>
     {% endif %}
 </div>
+
+<script>
+document.getElementById('saveApiKeyBtn').addEventListener('click', function() {
+    const apiKey = document.getElementById('apiKeyInput').value.trim();
+
+    if (!apiKey || apiKey === '••••••••••••••••') {
+        alert('Please enter a valid API key');
+        return;
+    }
+
+    const btn = this;
+    const originalText = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    fetch('{{ url_for("differentiation.save_api_key") }}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ api_key: apiKey })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            window.location.reload();
+        } else {
+            alert('Error: ' + data.error);
+            btn.disabled = false;
+            btn.textContent = originalText;
+        }
+    })
+    .catch(error => {
+        alert('Error saving API key: ' + error);
+        btn.disabled = false;
+        btn.textContent = originalText;
+    });
+});
+</script>
 {% endblock %}
