@@ -184,7 +184,136 @@ INTRODUCTION TO COMPUTER SCIENCE CURRICULUM STANDARDS:
 
 {curriculum_text}
 
-Please confirm you have reviewed these standards and are ready to use them for differentiation guidance."""
+---
+
+DIFFERENTIATION BEST PRACTICES AND GUIDELINES:
+
+When creating differentiation suggestions, consider these research-based strategies:
+
+**Universal Design for Learning (UDL) Principles:**
+1. Multiple Means of Representation - Present information in multiple formats (visual, auditory, text)
+2. Multiple Means of Action and Expression - Allow students to demonstrate learning in various ways
+3. Multiple Means of Engagement - Provide multiple pathways to motivate and engage learners
+
+**Common Accommodation Categories:**
+
+**Visual Accommodations:**
+- Enlarged text or alternative fonts (dyslexia-friendly fonts like OpenDyslexic)
+- High contrast materials and color-coded information
+- Graphic organizers and visual schedules
+- Reduced visual clutter on pages
+- Screen reader compatibility
+
+**Processing Accommodations:**
+- Extended time for assignments and assessments
+- Breaking complex tasks into smaller, sequential steps
+- Chunking information into manageable segments
+- Providing advance organizers and outlines
+- Additional processing time between instructions
+
+**Executive Functioning Support:**
+- Clear, explicit step-by-step instructions
+- Checklists and task management tools
+- Templates and frameworks for organization
+- Visual timers and time management aids
+- Structured routines and predictable formats
+
+**Reading and Language Support:**
+- Simplified vocabulary with technical term glossaries
+- Sentence starters and writing frames
+- Text-to-speech options for written materials
+- Audio recordings of instructions
+- Reduced reading load with key excerpts highlighted
+
+**Attention and Focus Support:**
+- Frequent breaks and movement opportunities
+- Clear, concise instructions (one or two steps at a time)
+- Minimize distractions in materials
+- Provide fidget tools or alternative seating options
+- Use attention-grabbing cues (bold, color, icons)
+
+**Memory Support:**
+- Reference sheets and quick-reference guides
+- Mnemonic devices and memory strategies
+- Repeated exposure to key concepts
+- Review and reinforcement activities
+- Connection to prior knowledge
+
+**Social-Emotional Support:**
+- Clear expectations and rubrics
+- Choice in assignments when possible
+- Positive reinforcement and specific feedback
+- Collaborative work options with defined roles
+- Low-stakes practice opportunities
+
+**Technology-Based Supports:**
+- Code editors with autocomplete and syntax highlighting
+- Debugging tools with visual feedback
+- Interactive coding environments (block-based or text-based)
+- Video tutorials and screencasts
+- Online collaboration tools with version control
+
+**Computer Science-Specific Strategies:**
+
+For Computational Thinking:
+- Use concrete manipulatives before abstract coding
+- Provide algorithm templates and flowchart frameworks
+- Break programming problems into pseudo-code first
+- Use pair programming and think-aloud protocols
+- Offer worked examples with explanations
+
+For Coding Assignments:
+- Provide starter code or code skeletons
+- Include detailed comments explaining code structure
+- Use color-coding for different code elements
+- Offer debugging checklists
+- Provide reference implementations
+
+For Technical Concepts:
+- Use analogies to real-world scenarios
+- Provide visual representations (diagrams, animations)
+- Hands-on demonstrations and experiments
+- Connection to students' interests and experiences
+- Multiple examples showing concept application
+
+For Project-Based Learning:
+- Scaffold with milestones and checkpoints
+- Provide planning templates and project outlines
+- Offer choice in project topics within constraints
+- Include peer review and feedback opportunities
+- Allow for both individual and collaborative options
+
+For Assessments:
+- Provide alternative assessment formats (oral, visual, practical)
+- Allow use of reference materials
+- Offer practice tests and self-assessment tools
+- Use authentic, real-world assessment tasks
+- Focus on demonstrating understanding vs. rote memorization
+
+**Quality Indicators for Differentiation Suggestions:**
+
+Good differentiation suggestions should:
+- Be specific and actionable (not vague)
+- Maintain academic rigor and standards alignment
+- Address individual student needs explicitly
+- Be feasible for teachers to implement
+- Support independence rather than creating dependency
+- Consider both access and challenge
+- Be culturally responsive and asset-based
+- Include why the modification helps the specific student
+
+**Example High-Quality Suggestions:**
+
+Instead of: "Simplify the assignment"
+Better: "Break the programming assignment into 3 phases with checkpoints: (1) design the algorithm using flowcharts, (2) write pseudo-code, (3) implement in Python. Provide a template for each phase. This supports students who need help with task initiation and organization (Jane D., Mike K.)"
+
+Instead of: "Give more time"
+Better: "Extend the deadline by 2 days and provide a daily progress checklist with 15-minute time blocks. This supports students who have processing speed and executive functioning needs (504 Group, Mike K.)"
+
+Instead of: "Add visuals"
+Better: "Create a visual glossary with icons for key terms: 'variable' (labeled box), 'loop' (circular arrow), 'function' (input-output diagram). Include this as a reference sheet. This supports students who benefit from visual-spatial learning (Jane D., IEP Group)"
+
+Please confirm you have reviewed these standards and guidelines and are ready to provide high-quality differentiation suggestions."""
                         }
                     ]
                 },
@@ -192,15 +321,29 @@ Please confirm you have reviewed these standards and are ready to use them for d
                     'role': 'model',
                     'parts': [
                         {
-                            'text': """I have thoroughly reviewed the Introduction to Computer Science curriculum standards. I understand the five main domains:
+                            'text': """I have thoroughly reviewed the Introduction to Computer Science curriculum standards and the comprehensive differentiation best practices guide. I understand:
 
+**Curriculum Standards - Five Main Domains:**
 1. Careers and Professionalism (Domain 1)
 2. Computational Thinking (Domain 2)
 3. Data Analysis and Visualization (Domain 3)
 4. Major and Emerging Technologies (Domain 4)
 5. Cybersecurity, Computer Systems, and Networking (Domain 5)
 
-I'm ready to provide differentiation suggestions that align with these standards while ensuring accessibility for students with diverse learning needs. I will reference specific performance indicators when relevant and ensure that modifications maintain the academic rigor and learning objectives outlined in these standards."""
+**Differentiation Framework:**
+- Universal Design for Learning (UDL) principles for multiple means of representation, action, and engagement
+- Eight key accommodation categories (visual, processing, executive functioning, reading/language, attention, memory, social-emotional, technology)
+- Computer science-specific strategies for computational thinking, coding, technical concepts, projects, and assessments
+- Quality indicators emphasizing specific, actionable, standards-aligned suggestions
+
+I'm ready to provide high-quality differentiation suggestions that:
+1. Reference specific performance indicators by code (e.g., 2.1.1, 3.2.4)
+2. Address individual student needs with concrete, actionable strategies
+3. Maintain academic rigor while ensuring accessibility
+4. Include clear rationales for why each modification helps specific students
+5. Apply research-based best practices from the guidelines provided
+
+I will ensure all suggestions are feasible to implement, support student independence, and align with the curriculum standards."""
                         }
                     ]
                 }
