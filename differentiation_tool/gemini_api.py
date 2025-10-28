@@ -313,7 +313,112 @@ Better: "Extend the deadline by 2 days and provide a daily progress checklist wi
 Instead of: "Add visuals"
 Better: "Create a visual glossary with icons for key terms: 'variable' (labeled box), 'loop' (circular arrow), 'function' (input-output diagram). Include this as a reference sheet. This supports students who benefit from visual-spatial learning (Jane D., IEP Group)"
 
-Please confirm you have reviewed these standards and guidelines and are ready to provide high-quality differentiation suggestions."""
+**Additional Detailed Examples by Accommodation Type:**
+
+**For Students with ADHD/Attention Needs:**
+- Break 45-minute coding sessions into three 15-minute segments with 2-minute movement breaks
+- Provide a coding "focus checklist": (1) Read the problem, (2) Write one line of code, (3) Test it, (4) Repeat
+- Use color-coded comments in starter code: Green = "Complete this section", Yellow = "Optional challenge", Red = "Do not modify"
+- Create a "debugging detective" checklist with specific steps to follow when code doesn't work
+- Minimize visual distractions: use a clean code editor theme with reduced syntax highlighting complexity
+
+**For Students with Dyslexia/Reading Challenges:**
+- Use dyslexia-friendly fonts (OpenDyslexic, Comic Sans MS) in all code and text materials
+- Provide audio recordings of all written instructions using text-to-speech tools
+- Use syntax highlighting that emphasizes word shapes and boundaries
+- Create visual "code cards" showing common syntax patterns with color coding
+- Reduce text density: use bullet points instead of paragraphs, white space between sections
+- Provide a pronunciation guide for technical terms (e.g., "iteration: it-er-AY-shun")
+
+**For Students with Autism Spectrum Disorder:**
+- Provide explicit rubrics with concrete examples for all assignments
+- Create social scripts for pair programming: "When your partner is typing, you should...", "When you disagree, you can say..."
+- Use consistent formatting and structure across all materials (same font, same heading hierarchy, same layout)
+- Provide sensory-friendly alternatives: option to work in a quieter space, use noise-canceling headphones
+- Include concrete, literal language; avoid idioms and figurative language in instructions
+- Offer a visual schedule showing the sequence of activities and estimated time for each
+
+**For Students with Processing Speed Challenges:**
+- Provide all materials 24 hours in advance when possible for preview
+- Use "think-pair-share" format: give individual thinking time before discussing with a partner
+- Create "quick reference" cards summarizing key concepts to reduce need for memory recall
+- Allow use of pre-written code snippets library to reduce typing demands
+- Extend time by 50-100% for coding assignments and assessments
+- Break down multi-step problems into explicit numbered steps with checkboxes
+
+**For Students with Executive Functioning Difficulties:**
+- Provide project planning templates with built-in milestones and deadlines
+- Use visual project trackers (Kanban boards, progress bars, checklists)
+- Create "getting started" guides: exact first three steps to begin any assignment
+- Send daily or weekly progress check-in emails with specific questions about next steps
+- Provide file organization systems: naming conventions, folder structures, version control guides
+- Use timers and time-blocking strategies: "Spend exactly 10 minutes on brainstorming"
+
+**For Students with Memory/Recall Challenges:**
+- Create comprehensive reference sheets for syntax, common functions, and keyboard shortcuts
+- Use mnemonic devices: "Please Excuse My Dear Aunt Sally" for order of operations becomes "Print Every Message Directly At Screen" for Python print syntax
+- Implement spaced repetition: review key concepts at increasing intervals (same day, next day, next week)
+- Provide worked examples with detailed annotations explaining each step
+- Use color-coding consistently: always use same colors for same concepts (e.g., variables always blue)
+- Create "cheat sheets" with the 10 most commonly used code patterns for easy reference
+
+**For English Language Learners (ELL) in CS:**
+- Provide bilingual glossaries of technical terms
+- Use visual diagrams and flowcharts to supplement text explanations
+- Clarify multiple meanings: "run" the program vs. "run" in sports, "loop" in code vs. physical loop
+- Teach vocabulary in context with real code examples
+- Allow use of translation tools for assignment instructions (but encourage English for code comments)
+- Pair with bilingual partners when possible for collaborative work
+- Use simplified sentence structures in instructions while maintaining technical accuracy
+
+**For Students with Anxiety/Emotional Regulation Needs:**
+- Provide low-stakes practice opportunities before graded assessments
+- Offer choice in assignment topics to increase engagement and reduce stress
+- Create "safe to fail" learning environments: emphasize that errors are learning opportunities
+- Provide clear success criteria and exemplars to reduce ambiguity
+- Allow resubmissions or test corrections to reduce high-stakes pressure
+- Offer quiet spaces or flexible seating for independent work
+- Use positive, growth-mindset language: "not yet successful" instead of "wrong"
+
+**Implementation Strategies for Teachers:**
+
+**Grouping Strategies:**
+- Use flexible grouping: sometimes by skill level, sometimes by learning style, sometimes mixed
+- For pair programming, match students thoughtfully: consider complementary strengths
+- Create "expert groups" where students with similar needs learn strategies together
+- Use jigsaw method: students become experts on one aspect, then teach others
+
+**Assessment Differentiation:**
+- Offer multiple ways to demonstrate mastery: written code, verbal explanation, flowchart, video tutorial
+- Use portfolio assessment: collect evidence of learning over time rather than single high-stakes tests
+- Provide assessment choice boards: students select from menu of options (e.g., create a game, solve 10 problems, or build a tool)
+- Use peer assessment with structured rubrics to develop metacognitive skills
+- Implement "test corrections" or "revision" opportunities for improved understanding
+
+**Technology Tools for Differentiation:**
+- Screen readers: NVDA, JAWS for students with visual impairments
+- Speech-to-text: Dragon NaturallySpeaking, Google Voice Typing for students with writing difficulties
+- Code completion tools: GitHub Copilot, TabNine with appropriate scaffolding
+- Visual programming: Scratch, Blockly for students who struggle with syntax
+- Debugging tools: Python Tutor, visualization tools that show code execution step-by-step
+- Organization tools: Trello, Notion, Google Keep for project management
+
+**Creating Inclusive Learning Materials:**
+- Use high contrast (black text on white background or vice versa)
+- Ensure all images have alt text descriptions
+- Provide captions and transcripts for all video content
+- Make materials screen-reader compatible
+- Use accessible formats: HTML over PDF when possible, ensure PDFs are tagged
+- Test materials with accessibility checkers and tools
+
+**Differentiation Without Lowering Standards:**
+The goal is to maintain high expectations while providing multiple pathways to success:
+- Same learning objective, different scaffolding levels
+- Same final product, different levels of support during creation
+- Same assessment, different accommodations (time, format, tools)
+- Challenge all students: provide extension activities for advanced learners simultaneously
+
+Please confirm you have reviewed these comprehensive standards and guidelines and are ready to provide high-quality differentiation suggestions that are specific, actionable, and maintain academic rigor."""
                         }
                     ]
                 },
@@ -330,20 +435,38 @@ Please confirm you have reviewed these standards and guidelines and are ready to
 4. Major and Emerging Technologies (Domain 4)
 5. Cybersecurity, Computer Systems, and Networking (Domain 5)
 
-**Differentiation Framework:**
+**Comprehensive Differentiation Framework:**
 - Universal Design for Learning (UDL) principles for multiple means of representation, action, and engagement
 - Eight key accommodation categories (visual, processing, executive functioning, reading/language, attention, memory, social-emotional, technology)
 - Computer science-specific strategies for computational thinking, coding, technical concepts, projects, and assessments
 - Quality indicators emphasizing specific, actionable, standards-aligned suggestions
 
-I'm ready to provide high-quality differentiation suggestions that:
-1. Reference specific performance indicators by code (e.g., 2.1.1, 3.2.4)
-2. Address individual student needs with concrete, actionable strategies
-3. Maintain academic rigor while ensuring accessibility
-4. Include clear rationales for why each modification helps specific students
-5. Apply research-based best practices from the guidelines provided
+**Detailed Accommodation Strategies for:**
+- Students with ADHD/Attention Needs (movement breaks, focus checklists, color-coded materials)
+- Students with Dyslexia/Reading Challenges (dyslexia-friendly fonts, audio support, visual code cards)
+- Students with Autism Spectrum Disorder (explicit rubrics, social scripts, consistent formatting)
+- Students with Processing Speed Challenges (preview time, extended deadlines, quick reference cards)
+- Students with Executive Functioning Difficulties (project templates, visual trackers, getting started guides)
+- Students with Memory/Recall Challenges (reference sheets, mnemonics, spaced repetition)
+- English Language Learners (bilingual glossaries, simplified language, visual support)
+- Students with Anxiety/Emotional Needs (low-stakes practice, choice, growth mindset)
 
-I will ensure all suggestions are feasible to implement, support student independence, and align with the curriculum standards."""
+**Implementation Strategies:**
+- Flexible grouping and pair programming approaches
+- Assessment differentiation with multiple demonstration options
+- Technology tools for accessibility and support
+- Creating inclusive learning materials that maintain high standards
+
+I'm ready to provide high-quality differentiation suggestions that:
+1. Reference specific performance indicators by code (e.g., 2.1.1, 3.2.4) when relevant
+2. Address individual student needs with concrete, actionable strategies drawn from the comprehensive guide
+3. Maintain academic rigor while ensuring accessibility for all learners
+4. Include clear rationales for why each modification helps specific students based on their needs
+5. Apply research-based best practices from the extensive guidelines provided
+6. Suggest appropriate accommodations from the detailed examples for each need category
+7. Recommend specific tools, formats, and implementation strategies
+
+I will ensure all suggestions are feasible to implement, support student independence and growth, align with curriculum standards, and maintain high expectations for all students while providing necessary support."""
                         }
                     ]
                 }
@@ -372,14 +495,22 @@ def markdown_to_html(text):
     Returns:
         Clean HTML string with proper formatting
     """
-    # Remove markdown code fences if present
     text = text.strip()
 
-    # Remove triple backtick code fences
-    text = re.sub(r'^```[\w]*\n', '', text, flags=re.MULTILINE)
-    text = re.sub(r'\n```$', '', text, flags=re.MULTILINE)
-    text = re.sub(r'^```[\w]*$', '', text, flags=re.MULTILINE)
-    text = re.sub(r'^```$', '', text, flags=re.MULTILINE)
+    # Only remove outer markdown code fence wrapper if the ENTIRE response is wrapped
+    # This handles cases where Gemini wraps the whole output in ```markdown...```
+    # But preserves code blocks within the content
+    if text.startswith('```') and text.endswith('```'):
+        lines = text.split('\n')
+        # Remove first line (opening fence) and last line (closing fence)
+        if len(lines) > 2:
+            # Check if first line is just a fence (possibly with language identifier)
+            if lines[0].strip().startswith('```'):
+                lines = lines[1:]
+            # Check if last line is just a closing fence
+            if lines and lines[-1].strip() == '```':
+                lines = lines[:-1]
+            text = '\n'.join(lines)
 
     # Convert markdown to HTML with extensions for better formatting
     html = markdown.markdown(
@@ -550,11 +681,16 @@ Create a complete, ready-to-use lesson document that:
 
 IMPORTANT: Format your response in clean markdown. Use:
 - Headers (# ## ###) for sections
-- Code blocks with proper indentation for code examples
+- Code blocks with triple backticks (```) and proper indentation for code examples
+  Example:
+  ```python
+  def example():
+      return "properly indented"
+  ```
 - Lists for step-by-step instructions
 - Bold and italic for emphasis where appropriate
 
-Do NOT wrap your response in markdown code fences (```). Just provide the formatted content directly."""
+Provide the formatted content directly as markdown (do NOT wrap the entire response in outer code fences)."""
 
         response = model.generate_content(prompt)
 
