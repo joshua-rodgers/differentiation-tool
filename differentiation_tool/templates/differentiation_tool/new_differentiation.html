@@ -83,6 +83,97 @@
             </div>
             {% endif %}
 
+            <div class="form-group">
+                <label class="form-label">Select Curriculum Standards (Optional)</label>
+                <p class="text-muted" style="font-size: 0.9rem; margin-bottom: 0.75rem;">
+                    Choose specific Introduction to Computer Science standards you want to focus on. If none are selected, the AI will have access to all standards.
+                </p>
+                <details style="border: 2px solid var(--border-light); border-radius: 8px; padding: 1rem;">
+                    <summary style="cursor: pointer; font-weight: 600; margin-bottom: 1rem; user-select: none;">
+                        Click to view and select standards
+                    </summary>
+                    <div style="max-height: 400px; overflow-y: auto;">
+                        {% if curriculum_standards %}
+                            {% set current_domain = namespace(value='') %}
+                            {% set current_standard = namespace(value='') %}
+                            {% for std in curriculum_standards %}
+                                {% if std['domain'] != current_domain.value %}
+                                    {% if current_domain.value != '' %}
+                                        </div></div>
+                                    {% endif %}
+                                    {% set current_domain.value = std['domain'] %}
+                                    <div style="margin-bottom: 1.5rem;">
+                                        <h4 style="color: var(--primary-color); font-size: 1rem; margin-bottom: 0.5rem;">
+                                            {{ std['domain'] }}: {{ std['domain_title'] }}
+                                        </h4>
+                                        <div style="margin-left: 1rem;">
+                                    {% set current_standard.value = '' %}
+                                {% endif %}
+                                {% if std['standard'] != current_standard.value %}
+                                    {% if current_standard.value != '' %}
+                                        </div>
+                                    {% endif %}
+                                    {% set current_standard.value = std['standard'] %}
+                                    <div style="margin-bottom: 1rem;">
+                                        <h5 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-dark);">
+                                            {{ std['standard'] }}: {{ std['standard_title'][:60] }}{% if std['standard_title']|length > 60 %}...{% endif %}
+                                        </h5>
+                                        <div style="margin-left: 1rem;">
+                                {% endif %}
+                                <div class="form-check" style="margin-bottom: 0.3rem;">
+                                    <input type="checkbox" id="std_{{ std['code'] }}" name="standards"
+                                           value="{{ std['code'] }}" class="form-check-input">
+                                    <label for="std_{{ std['code'] }}" class="form-check-label" style="font-size: 0.85rem;">
+                                        <strong>{{ std['code'] }}:</strong> {{ std['text'][:100] }}{% if std['text']|length > 100 %}...{% endif %}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                            {% if current_standard.value != '' %}
+                                </div></div>
+                            {% endif %}
+                            {% if current_domain.value != '' %}
+                                </div></div>
+                            {% endif %}
+                        {% else %}
+                            <p class="text-muted">No curriculum standards available.</p>
+                        {% endif %}
+                    </div>
+                    <div style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-light);">
+                        <button type="button" onclick="selectAllStandards()" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem;">
+                            Select All
+                        </button>
+                        <button type="button" onclick="deselectAllStandards()" class="btn btn-secondary" style="font-size: 0.85rem; padding: 0.4rem 0.8rem; margin-left: 0.5rem;">
+                            Deselect All
+                        </button>
+                        <span id="standards-count" style="margin-left: 1rem; font-size: 0.85rem; color: var(--text-muted);"></span>
+                    </div>
+                </details>
+            </div>
+
+            <script>
+                function selectAllStandards() {
+                    document.querySelectorAll('input[name="standards"]').forEach(cb => cb.checked = true);
+                    updateStandardsCount();
+                }
+                function deselectAllStandards() {
+                    document.querySelectorAll('input[name="standards"]').forEach(cb => cb.checked = false);
+                    updateStandardsCount();
+                }
+                function updateStandardsCount() {
+                    const count = document.querySelectorAll('input[name="standards"]:checked').length;
+                    const countEl = document.getElementById('standards-count');
+                    if (count > 0) {
+                        countEl.textContent = count + ' standard' + (count !== 1 ? 's' : '') + ' selected';
+                    } else {
+                        countEl.textContent = 'No standards selected (AI will use all)';
+                    }
+                }
+                document.querySelectorAll('input[name="standards"]').forEach(cb => {
+                    cb.addEventListener('change', updateStandardsCount);
+                });
+                updateStandardsCount();
+            </script>
+
             <div class="btn-group">
                 <button type="submit" class="btn btn-primary">Continue to Suggestions →</button>
                 <a href="{{ url_for('differentiation.dashboard') }}" class="btn btn-secondary">Cancel</a>
