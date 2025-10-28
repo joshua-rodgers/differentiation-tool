@@ -40,8 +40,9 @@ user_message = f"Curriculum standards + Differentiation guide"
 
 # Rough estimate for the full cached content
 system_instruction_estimate = 150  # tokens
-user_message_estimate = curriculum_tokens_estimate + 2000  # curriculum + differentiation guide
-model_response_estimate = 250  # tokens
+differentiation_guide_estimate = 2300  # Expanded guide with detailed examples for all accommodation types
+user_message_estimate = curriculum_tokens_estimate + differentiation_guide_estimate  # curriculum + differentiation guide
+model_response_estimate = 350  # tokens (expanded response)
 
 total_estimate = system_instruction_estimate + user_message_estimate + model_response_estimate
 
