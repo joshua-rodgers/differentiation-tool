@@ -390,16 +390,17 @@ def new_differentiation():
         material = request.form.get('material')
         selected_students = request.form.getlist('students')
         selected_groups = request.form.getlist('groups')
+        selected_standards = request.form.getlist('standards')
 
         if not material:
             flash('Please enter the lesson material.', 'error')
         elif not selected_students and not selected_groups:
             flash('Please select at least one student or group.', 'error')
         else:
-            # Create session
+            # Create session with selected standards
             cursor = conn.execute(
-                'INSERT INTO diff_sessions (user_id, original_material, title, phase) VALUES (?, ?, ?, ?)',
-                (user_id, material, title, 'select_students')
+                'INSERT INTO diff_sessions (user_id, original_material, title, phase, selected_standards) VALUES (?, ?, ?, ?, ?)',
+                (user_id, material, title, 'select_students', json.dumps(selected_standards))
             )
             session_id = cursor.lastrowid
 
@@ -436,10 +437,13 @@ def new_differentiation():
         (user_id,)
     ).fetchall()
 
+    # Get parsed curriculum standards for selection
+    curriculum_standards = gemini_api.parse_curriculum_standards()
+
     conn.close()
 
     return render_template('differentiation_tool/new_differentiation.html',
-                         students=students, groups=groups)
+                         students=students, groups=groups, curriculum_standards=curriculum_standards)
 
 @bp.route('/differentiate/<int:session_id>/suggestions')
 @login_required
@@ -478,9 +482,15 @@ def generate_suggestions(session_id):
     # Generate suggestions if not already done
     if not sess['suggestions']:
         try:
+            # Get selected standards if any
+            selected_standards = []
+            if sess['selected_standards']:
+                selected_standards = json.loads(sess['selected_standards'])
+
             suggestions = gemini_api.generate_suggestions(
                 sess['original_material'],
-                students_data
+                students_data,
+                selected_standards=selected_standards
             )
             suggestions_json = json.dumps(suggestions)
 

@@ -117,11 +117,18 @@ def init_db():
             suggestions TEXT,
             approved_suggestions TEXT,
             final_content TEXT,
+            selected_standards TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
         )
     ''')
+
+    # Add selected_standards column if it doesn't exist (migration)
+    try:
+        cursor.execute('ALTER TABLE diff_sessions ADD COLUMN selected_standards TEXT')
+    except sqlite3.OperationalError:
+        pass  # Column already exists
 
     # Session students (which students/groups are involved)
     cursor.execute('''
