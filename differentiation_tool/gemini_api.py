@@ -53,7 +53,7 @@ def get_or_create_curriculum_cache():
         # Create a new cache with the curriculum standards
         # Cache will expire after 1 hour by default
         cache = caching.CachedContent.create(
-            model='models/gemini-2.0-flash-exp',
+            model='models/gemini-2.0-flash',
             display_name='intro_cs_curriculum',
             system_instruction=f"""You are an expert in educational differentiation for students with IEPs, 504 plans, and special accommodations.
 
@@ -142,7 +142,7 @@ def generate_suggestions(original_material, students_data):
         else:
             # Fall back to non-cached model
             configure_gemini()
-            model = genai.GenerativeModel('gemini-2.0-flash-exp')
+            model = genai.GenerativeModel('gemini-2.0-flash')
 
         # Build student profiles text
         student_profiles = []
@@ -239,7 +239,7 @@ def generate_differentiated_content(original_material, approved_suggestions):
         else:
             # Fall back to non-cached model
             configure_gemini()
-            model = genai.GenerativeModel('gemini-2.0-flash-exp')
+            model = genai.GenerativeModel('gemini-2.0-flash')
 
         suggestions_text = "\n".join([f"- {s}" for s in approved_suggestions])
 

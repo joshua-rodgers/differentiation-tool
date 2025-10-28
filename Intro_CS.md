@@ -1,127 +1,124 @@
-# Introduction to Computer Science - Curriculum Standards
+# Introduction to Computer Science
+---
 
-## Course Overview
-This course introduces students to the fundamental concepts of computer science, including programming, computational thinking, data structures, and algorithms.
+## Domain 1 – Careers and Professionalism
 
-## Learning Objectives
+### Standard 1.1 – Demonstrate professional readiness within the computer science domain
 
-### Unit 1: Introduction to Programming
-- Understand variables, data types, and operators
-- Write simple programs using sequential, conditional, and iterative structures
-- Debug and test programs
-- Apply problem-solving strategies
+**Performance Indicators:**
 
-**Key Concepts:**
-- Variables and data types (integers, strings, booleans, floats)
-- Input and output operations
-- Arithmetic and logical operators
-- Control structures (if/else, loops)
+* **1.1.1** Demonstrate understanding of various career paths in computer science (e.g., software development, data science, cybersecurity, networking, robotics, computer engineering, and artificial intelligence) and their roles in different industries.
+* **1.1.2** Practice professional communication skills through various activities (e.g., mock interviews, technical presentations, and collaborative coding projects) to prepare for real‐world scenarios in computer science careers.
+* **1.1.3** Describe the importance of ethical considerations in computer science (e.g., data privacy, algorithmic bias, and social impact of technology) and how they apply to professional practice.
+* **1.1.4** Evaluate the concept and importance of a professional online presence in computer science careers (e.g., portfolio websites, professional networking platforms, open‐source contributions) and explore ways to showcase skills and projects.
+* **1.1.5** Identify key elements of a professional portfolio and explain the purpose of a portfolio (e.g., showcasing skills, documenting growth, and supporting college applications or job searches).
 
-### Unit 2: Functions and Modularity
-- Define and call functions with parameters and return values
-- Understand scope and lifetime of variables
-- Break down complex problems into smaller functions
-- Use built-in functions and libraries
+---
 
-**Key Concepts:**
-- Function definition and invocation
-- Parameters and arguments
-- Return values
-- Local vs global scope
+## Domain 2 – Computational Thinking
 
-### Unit 3: Data Structures
-- Work with lists, tuples, and dictionaries
-- Understand indexing and slicing
-- Perform operations on collections
-- Choose appropriate data structures for problems
+### Standard 2.1 – Apply computational thinking to effectively solve real‑world problems
 
-**Key Concepts:**
-- Lists and list operations
-- Dictionaries and key-value pairs
-- Tuples and immutability
-- Iteration over collections
+* **2.1.1** Recognize situations where leveraging computational approaches (e.g., data analysis, automation, or simulations) would be beneficial for solving real‑world problems.
+* **2.1.2** Apply the core computational thinking principles—abstraction, decomposition, algorithm development, and pattern recognition—to designing effective problem‑solving strategies.
 
-### Unit 4: Object-Oriented Programming
-- Understand classes and objects
-- Create and use instance variables and methods
-- Apply inheritance and composition
-- Design programs using OOP principles
+### Standard 2.2 – Access, manipulate, and store data within a program using a text‑based programming language
 
-**Key Concepts:**
-- Classes and objects
-- Constructors and methods
-- Encapsulation
-- Inheritance and polymorphism
+* **2.2.1** Use various data types (Booleans, characters, integers, floating points, and strings) appropriately within a program.
+* **2.2.2** Create and use variables to store and manage data within a program.
+* **2.2.3** Construct expressions using arithmetic operators (+, –, \*, /, %) and numeric data types to perform calculations.
+* **2.2.4** Convert between different data types when necessary (e.g., casting a string into an integer).
+* **2.2.5** Perform operations that encode and decode data (e.g., binary ↔ hexadecimal, numeric ↔ colored pixels, numbers ↔ ASCII/Unicode).
+* **2.2.6** Implement data structures (arrays, lists, sets, maps) to organize, store, manipulate, and operate on collections of data.
 
-### Unit 5: Algorithms and Complexity
-- Analyze algorithm efficiency
-- Implement searching and sorting algorithms
-- Understand Big O notation
-- Apply algorithmic thinking to problems
+### Standard 2.3 – Design and create programs by understanding the execution sequence and anticipated outputs
 
-**Key Concepts:**
-- Linear and binary search
-- Sorting algorithms (bubble, selection, insertion)
-- Time and space complexity
-- Algorithm analysis
+* **2.3.1** Analyze a program in terms of execution steps and expected outcomes (using storyboards, flowcharts, pseudocode).
+* **2.3.2** Construct Boolean expressions using relational operators (<, >, ≤, ≥, ==, ≠).
+* **2.3.3** Construct Boolean expressions using logical operators (AND, OR, NOT).
+* **2.3.4** Create programs with selection control structures (if statements, switch statements).
+* **2.3.5** Create programs with iteration control structures (while loops, for loops).
+* **2.3.6** Create subroutines (procedures, functions) for code modularity and reusability.
+* **2.3.7** Debug errors (syntax, runtime, logic) to ensure functionality.
 
-### Unit 6: Files and Data Processing
-- Read from and write to files
-- Parse and process text data
-- Work with CSV and JSON formats
-- Handle exceptions and errors
+### Standard 2.4 – Transfer data into and out of a program
 
-**Key Concepts:**
-- File I/O operations
-- Text processing and parsing
-- Structured data formats
-- Error handling
+* **2.4.1** Use the console for basic data input/output operations.
+* **2.4.2** Explain the structure and purpose of different file types (txt, csv, bmp, json).
+* **2.4.3** Develop programs that read from, write to, and append data to files.
 
-## Assessment Standards
+### Standard 2.5 – Develop programs that adhere to good coding conventions and include clear documentation
 
-### Proficiency Levels
-- **Beginning**: Can complete tasks with significant support and scaffolding
-- **Developing**: Can complete tasks with minimal support
-- **Proficient**: Can complete tasks independently
-- **Advanced**: Can extend concepts and apply them to novel situations
+* **2.5.1** Implement consistent formatting and naming conventions (indentation, spacing, variable names).
+* **2.5.2** Craft clear and concise comments explaining code sections, algorithms, and non‑obvious logic.
 
-### Skills Assessment
-Students should be able to:
-1. Write syntactically correct programs
-2. Apply computational thinking to solve problems
-3. Debug and test their code
-4. Explain their code to others
-5. Collaborate on programming projects
+---
 
-## Differentiation Strategies
+## Domain 3 – Data Analysis and Visualization
 
-### For Students with IEPs/504 Plans
-- Provide code templates and starter files
-- Break projects into smaller, manageable steps
-- Allow extended time for assignments
-- Offer visual aids and diagrams
-- Provide glossaries of programming terms
-- Use pair programming and peer support
-- Allow alternative assessment methods
+### Standard 3.1 – Investigate different types of data and explore methods for collecting data
 
-### For English Language Learners
-- Provide vocabulary lists with translations
-- Use visual programming tools when appropriate
-- Allow verbal explanations in addition to written code
-- Provide examples in multiple languages
+* **3.1.1** Categorize data into quantitative (continuous, discrete) and qualitative (nominal, ordinal).
+* **3.1.2** Identify potential data sources (sensors, surveys, databases, web scraping).
+* **3.1.3** Explain advantages/disadvantages of data collection methods (surveys, experiments, observational studies).
+* **3.1.4** Design basic data collection methods (short surveys, observation checklists, simple experiments).
 
-### For Advanced Students
-- Offer extension activities and challenges
-- Introduce additional programming concepts
-- Encourage independent projects
-- Provide opportunities for peer teaching
+### Standard 3.2 – Develop programs that communicate data insights using analysis and visualizations
 
-## Common Accommodations
-- Extended time on tests and projects
-- Use of reference materials during assessments
-- Step-by-step written instructions
-- Frequent check-ins and progress monitoring
-- Modified assignment length or complexity
-- Assistive technology (text-to-speech, screen readers)
-- Preferential seating near resources
-- Reduced distractions during coding time
+* **3.2.1** Identify/address data quality issues (missing values, inconsistencies, outliers).
+* **3.2.2** Analyze data using descriptive statistics (mean, median, quartiles, range) and visualizations (histograms, box plots).
+* **3.2.3** Use exploratory analysis to discern patterns, trends, relationships.
+* **3.2.4** Develop programs performing data analysis techniques (e.g., correlations, comparison of means).
+* **3.2.5** Create programs generating visualizations (bar charts, line charts, scatter plots, pie charts).
+
+### Standard 3.3 – Communicate data insights effectively, considering bias and ethics
+
+* **3.3.1** Explain how biases (confirmation, selection, reporting) influence analysis.
+* **3.3.2** Develop narratives that communicate insights to diverse audiences using storytelling.
+* **3.3.3** Differentiate correlation vs. causation in conclusions.
+* **3.3.4** Develop sound inferences to support decision‑making without overstating implications.
+* **3.3.5** Present positive and negative findings comprehensively and without bias.
+
+---
+
+## Domain 4 – Major and Emerging Technologies
+
+### Standard 4.1 – Foundational understanding of established major technologies
+
+* **4.1.1** Define artificial intelligence (AI), identify key subfields, and explain benefits/drawbacks.
+* **4.1.2** Explain cloud computing service models (IaaS, PaaS, SaaS) and their advantages/challenges.
+* **4.1.3** Define the Internet of Things (IoT), recognize applications, and discuss its impact.
+* **4.1.4** Explain big data characteristics and its impact on analysis and industries.
+
+### Standard 4.2 – Investigate emerging technologies and their future impact
+
+* **4.2.1** Define quantum computing principles and potential for computing power and cryptography.
+* **4.2.2** Describe edge computing’s role in reducing latency and enhancing privacy.
+* **4.2.3** Explain extended reality (VR, AR, MR) and potential applications.
+* **4.2.4** Describe blockchain capabilities and assess uses (supply chain, identity, DeFi).
+
+---
+
+## Domain 5 – Cybersecurity, Computer Systems, and Networking
+
+### Standard 5.1 – Foundational understanding of cybersecurity principles
+
+* **5.1.1** Analyze core information security principles (confidentiality, integrity, availability, authentication, non‑repudiation).
+* **5.1.2** Describe common cyber threats (malware, phishing, ransomware).
+* **5.1.3** Describe essential cybersecurity practices (encryption, secure coding, authentication) and technologies (firewalls, multi‑factor authentication).
+* **5.1.4** Analyze the impact of best practices (strong passwords, security awareness training).
+
+### Standard 5.2 – Core components and concepts of computer systems
+
+* **5.2.1** Identify key hardware components (CPU, RAM, storage, I/O devices) and their roles.
+* **5.2.2** Define software; distinguish system vs. application software.
+* **5.2.3** Explain operating system functions (resource management, UI, file systems).
+* **5.2.4** Summarize open‑source software benefits and impact.
+* **5.2.5** Explain importance of software updates and patches.
+
+### Standard 5.3 – Core concepts of computer networks
+
+* **5.3.1** Define network concepts (IP address, topology, protocols, bandwidth, latency).
+* **5.3.2** Describe network hardware (modems, routers, switches, firewalls, servers).
+* **5.3.3** Explain basic network security principles (access control, encryption, firewalls).
+* **5.3.4** Analyze relationships among systems, software, and networks in interconnected environments.
