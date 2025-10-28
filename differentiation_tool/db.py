@@ -28,6 +28,8 @@ def init_db():
             last_name TEXT NOT NULL,
             is_admin INTEGER DEFAULT 0,
             is_active INTEGER DEFAULT 0,
+            gemini_api_key TEXT,
+            default_key_requests INTEGER DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
     ''')
@@ -40,6 +42,17 @@ def init_db():
 
     try:
         cursor.execute('ALTER TABLE users ADD COLUMN is_active INTEGER DEFAULT 0')
+    except sqlite3.OperationalError:
+        pass  # Column already exists
+
+    # Add API key columns if they don't exist (migration)
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN gemini_api_key TEXT')
+    except sqlite3.OperationalError:
+        pass  # Column already exists
+
+    try:
+        cursor.execute('ALTER TABLE users ADD COLUMN default_key_requests INTEGER DEFAULT 0')
     except sqlite3.OperationalError:
         pass  # Column already exists
 
@@ -210,6 +223,42 @@ def update_user_stats(user_id):
             last_updated = CURRENT_TIMESTAMP
     ''', (user_id, lessons_count, students_count, groups_count, lessons_count, students_count, groups_count))
 
+    conn.commit()
+    conn.close()
+
+def get_user_api_key(user_id):
+    """Get user's Gemini API key and default key request count"""
+    conn = get_db()
+    user = conn.execute(
+        'SELECT gemini_api_key, default_key_requests FROM users WHERE id = ?',
+        (user_id,)
+    ).fetchone()
+    conn.close()
+
+    if user:
+        return {
+            'api_key': user['gemini_api_key'],
+            'default_key_requests': user['default_key_requests']
+        }
+    return None
+
+def save_user_api_key(user_id, api_key):
+    """Save user's Gemini API key"""
+    conn = get_db()
+    conn.execute(
+        'UPDATE users SET gemini_api_key = ? WHERE id = ?',
+        (api_key, user_id)
+    )
+    conn.commit()
+    conn.close()
+
+def increment_default_key_requests(user_id):
+    """Increment the count of requests made with the default API key"""
+    conn = get_db()
+    conn.execute(
+        'UPDATE users SET default_key_requests = default_key_requests + 1 WHERE id = ?',
+        (user_id,)
+    )
     conn.commit()
     conn.close()
 

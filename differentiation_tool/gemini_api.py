@@ -6,16 +6,24 @@ import google.generativeai as genai
 from google.generativeai import caching
 import datetime
 
+# Default API key (hardcoded fallback - limited to 4 requests per user)
+DEFAULT_API_KEY = os.environ.get('GEMINI_API_KEY', '')
+
 # Cache object for curriculum standards (module-level to persist across requests)
 _curriculum_cache = None
 _cache_created_at = None
 
-def configure_gemini():
-    """Configure the Gemini API with API key from environment"""
-    api_key = os.environ.get('GEMINI_API_KEY')
-    if not api_key:
-        raise ValueError("GEMINI_API_KEY environment variable not set")
-    genai.configure(api_key=api_key)
+def configure_gemini(api_key=None):
+    """
+    Configure the Gemini API with API key
+
+    Args:
+        api_key: User's API key. If None, uses the default key from environment.
+    """
+    key_to_use = api_key if api_key else DEFAULT_API_KEY
+    if not key_to_use:
+        raise ValueError("No API key available. Please set your Gemini API key.")
+    genai.configure(api_key=key_to_use)
 
 def load_curriculum_standards():
     """Load curriculum standards from file"""
@@ -136,11 +144,16 @@ def get_selected_standards_text(selected_codes):
 
     return "\n".join(output_lines)
 
-def get_or_create_curriculum_cache():
-    """Get existing cache or create new one for curriculum standards"""
+def get_or_create_curriculum_cache(api_key=None):
+    """
+    Get existing cache or create new one for curriculum standards
+
+    Args:
+        api_key: User's API key. If None, uses the default key.
+    """
     global _curriculum_cache, _cache_created_at
 
-    configure_gemini()
+    configure_gemini(api_key)
 
     # Check if cache exists and is still valid (refresh every 6 hours)
     if _curriculum_cache and _cache_created_at:
@@ -526,7 +539,7 @@ def markdown_to_html(text):
 
     return html
 
-def generate_suggestions(original_material, students_data, selected_standards=None):
+def generate_suggestions(original_material, students_data, selected_standards=None, api_key=None):
     """
     Generate differentiation suggestions based on material and student profiles
 
@@ -534,6 +547,7 @@ def generate_suggestions(original_material, students_data, selected_standards=No
         original_material: The lesson/assignment text
         students_data: List of dicts with student info (name, accommodations, needs)
         selected_standards: Optional list of standard codes to focus on (e.g., ['1.1.1', '2.3.4'])
+        api_key: User's API key. If None, uses the default key.
 
     Returns:
         List of suggestion dicts with structure:
@@ -544,14 +558,14 @@ def generate_suggestions(original_material, students_data, selected_standards=No
     """
     try:
         # Try to use cached curriculum context
-        cache = get_or_create_curriculum_cache()
+        cache = get_or_create_curriculum_cache(api_key)
 
         if cache:
             # Use model with cached curriculum context
             model = genai.GenerativeModel.from_cached_content(cached_content=cache)
         else:
             # Fall back to non-cached model
-            configure_gemini()
+            configure_gemini(api_key)
             model = genai.GenerativeModel('gemini-2.0-flash')
 
         # Build student profiles text
@@ -637,27 +651,28 @@ Return ONLY the JSON array, no other text."""
             'applies_to': []
         }]
 
-def generate_differentiated_content(original_material, approved_suggestions):
+def generate_differentiated_content(original_material, approved_suggestions, api_key=None):
     """
     Generate the final differentiated content incorporating all approved suggestions
 
     Args:
         original_material: The original lesson text
         approved_suggestions: List of approved suggestion texts
+        api_key: User's API key. If None, uses the default key.
 
     Returns:
         HTML string containing the formatted differentiated content
     """
     try:
         # Try to use cached curriculum context
-        cache = get_or_create_curriculum_cache()
+        cache = get_or_create_curriculum_cache(api_key)
 
         if cache:
             # Use model with cached curriculum context
             model = genai.GenerativeModel.from_cached_content(cached_content=cache)
         else:
             # Fall back to non-cached model
-            configure_gemini()
+            configure_gemini(api_key)
             model = genai.GenerativeModel('gemini-2.0-flash')
 
         suggestions_text = "\n".join([f"- {s}" for s in approved_suggestions])

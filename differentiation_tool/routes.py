@@ -42,6 +42,34 @@ def admin_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
+def get_user_api_key_or_default(user_id):
+    """
+    Get user's API key or default key, checking request limits
+
+    Returns:
+        tuple: (api_key, error_message)
+        If error_message is not None, the request should be denied
+    """
+    api_key_info = db.get_user_api_key(user_id)
+
+    # If user has their own key, use it
+    if api_key_info and api_key_info['api_key']:
+        return (api_key_info['api_key'], None)
+
+    # Using default key - check request limit
+    default_requests = api_key_info['default_key_requests'] if api_key_info else 0
+    if default_requests >= 4:
+        error_msg = (
+            'You have reached the limit of 4 free requests using the default API key. '
+            'Please add your own Google Gemini API key to continue. '
+            'You can get a free API key at https://aistudio.google.com/app/apikey'
+        )
+        return (None, error_msg)
+
+    # Increment the counter and return default key
+    db.increment_default_key_requests(user_id)
+    return (None, None)  # None means use default key from environment
+
 # ============= LANDING AND AUTH ROUTES =============
 
 @bp.route('/')
@@ -154,6 +182,12 @@ def dashboard():
         (user_id,)
     ).fetchall()
 
+    # Get API key information
+    api_key_info = db.get_user_api_key(user_id)
+    has_own_key = api_key_info and api_key_info['api_key'] is not None
+    default_requests = api_key_info['default_key_requests'] if api_key_info else 0
+    requests_remaining = max(0, 4 - default_requests) if not has_own_key else None
+
     conn.close()
 
     return render_template('differentiation_tool/dashboard.html',
@@ -161,7 +195,53 @@ def dashboard():
                          group_count=group_count,
                          lesson_count=lesson_count,
                          recent_lessons=recent_lessons,
-                         active_sessions=active_sessions)
+                         active_sessions=active_sessions,
+                         has_own_key=has_own_key,
+                         requests_remaining=requests_remaining)
+
+# ============= API KEY MANAGEMENT =============
+
+@bp.route('/api/save-api-key', methods=['POST'])
+@login_required
+def save_api_key():
+    """Save user's Gemini API key"""
+    try:
+        data = request.get_json()
+        api_key = data.get('api_key', '').strip()
+
+        if not api_key:
+            return jsonify({'success': False, 'error': 'API key is required'}), 400
+
+        # Save the API key
+        db.save_user_api_key(session['user_id'], api_key)
+
+        return jsonify({
+            'success': True,
+            'message': 'API key saved successfully! You now have unlimited requests.'
+        })
+
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@bp.route('/api/get-api-key-status', methods=['GET'])
+@login_required
+def get_api_key_status():
+    """Get user's API key status"""
+    try:
+        api_key_info = db.get_user_api_key(session['user_id'])
+        has_own_key = api_key_info and api_key_info['api_key'] is not None
+        default_requests = api_key_info['default_key_requests'] if api_key_info else 0
+        requests_remaining = max(0, 4 - default_requests) if not has_own_key else None
+
+        return jsonify({
+            'success': True,
+            'has_own_key': has_own_key,
+            'requests_remaining': requests_remaining,
+            'default_requests': default_requests
+        })
+
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 # ============= STUDENT MANAGEMENT =============
 
@@ -482,6 +562,13 @@ def generate_suggestions(session_id):
     # Generate suggestions if not already done
     if not sess['suggestions']:
         try:
+            # Check API key and request limits
+            api_key, error_msg = get_user_api_key_or_default(user_id)
+            if error_msg:
+                flash(error_msg, 'error')
+                conn.close()
+                return redirect(url_for('differentiation.dashboard'))
+
             # Get selected standards if any
             selected_standards = []
             if sess['selected_standards']:
@@ -490,7 +577,8 @@ def generate_suggestions(session_id):
             suggestions = gemini_api.generate_suggestions(
                 sess['original_material'],
                 students_data,
-                selected_standards=selected_standards
+                selected_standards=selected_standards,
+                api_key=api_key
             )
             suggestions_json = json.dumps(suggestions)
 
@@ -574,13 +662,21 @@ def generate_final(session_id):
 
     # Generate content if not already done
     if not sess['final_content']:
+        # Check API key and request limits
+        api_key, error_msg = get_user_api_key_or_default(user_id)
+        if error_msg:
+            flash(error_msg, 'error')
+            conn.close()
+            return redirect(url_for('differentiation.dashboard'))
+
         approved_suggestions = json.loads(sess['approved_suggestions'])
         suggestion_texts = [s['text'] for s in approved_suggestions]
 
         try:
             final_content = gemini_api.generate_differentiated_content(
                 sess['original_material'],
-                suggestion_texts
+                suggestion_texts,
+                api_key=api_key
             )
 
             # Track API usage
